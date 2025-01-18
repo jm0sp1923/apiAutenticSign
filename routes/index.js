@@ -5,12 +5,15 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send("index", { title: "Express" });
+  res.send({status:200});
 });
 
 
 router.post("/cargarProceso", async function (req, res, next) {
   const { name, lastName, identification, email, phone } = req.body;
+
+
+  console.log(req.body)
 
   // Obtén el token utilizando el endpoint /obtenerTokenApi
   const tokenRequestBody = {

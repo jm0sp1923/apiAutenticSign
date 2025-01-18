@@ -8,6 +8,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "autenticsign": "file:",
     "axios": "^1.7.9",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
