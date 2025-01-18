@@ -12,8 +12,10 @@ router.get("/", function (req, res, next) {
 router.post("/cargarProceso", async function (req, res, next) {
   const { name, lastName, identification, email, phone } = req.body;
 
+  console.log("Variables: ",name, lastName, identification, email, phone);
 
-  console.log(req.body)
+
+  console.log("req.body: ",req.body)
 
   // Obtén el token utilizando el endpoint /obtenerTokenApi
   const tokenRequestBody = {
