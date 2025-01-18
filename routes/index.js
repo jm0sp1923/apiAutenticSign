@@ -1,38 +1,24 @@
 import express from "express";
 import axios from "axios";
 import "dotenv/config";
+import getTokenApi from "../utils/getTokenApi.js";
 const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send({ status: 200 });
+  res.status(200).json({ message: "Hello World" });
 });
 
 router.post("/cargarProceso", async function (req, res, next) {
-  const { name, lastName, identification, email, phone } = req.body;
+  const { representante_legal, cedula_representante_legal, correo, numero_celular } = req.body;
 
-  console.log("Variables: ", name, lastName, identification, email, phone);
+  console.log("Variables: ", representante_legal, cedula_representante_legal, correo, numero_celular);
 
-  console.log("req.body: ", req.body);
-
-  // Obtén el token utilizando el endpoint /obtenerTokenApi
-  const tokenRequestBody = {
-    audience: process.env.AUDIENCE,
-    grant_type: process.env.GRANT_TYPE,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
-  };
+  if(!representante_legal || !cedula_representante_legal || !correo || !numero_celular) {
+    return res.status(400).json({ error: "Faltan campos obligatorios" });
+  }
 
   try {
-    // Solicita el token primero
-    const tokenResponse = await axios.post(
-      "https://authorizer.autenticsign.com/v2/authorizer/getToken",
-      tokenRequestBody
-    );
-
-    const token = tokenResponse.data.access_token;
-
-    // Ahora crea el proceso
     const jsonBody = {
       sendCompletionNotification: true,
       emailForNotification: "juan.munoz@affi.net",
@@ -43,12 +29,11 @@ router.post("/cargarProceso", async function (req, res, next) {
           senderIdentification: "1109184891",
           signers: [
             {
-              name: name,
-              lastName: lastName,
+              name: representante_legal,
               documentType: "CC",
-              identification: identification,
-              email: email,
-              phone: phone,
+              identification: cedula_representante_legal,
+              email: correo,
+              phone: numero_celular,
               role: "APPROVER",
               authMethods: ["OTP"],
             },
@@ -67,34 +52,32 @@ router.post("/cargarProceso", async function (req, res, next) {
       ],
     };
 
-    try {
-      const processResponse = await axios.post(
-        "https://qa-mpl.autenticsign.com/v3/signing-process/",
-        jsonBody,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Incluir el token en los encabezados
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error al cargar el proceso:", error);
+    // Esperar el token de la función asíncrona
+    const token = await getTokenApi();
 
-      res.status(500).json({ error: "No se pudo cargar el proceso" });
+    // Verificar si el token fue obtenido exitosamente
+    if (!token || typeof token !== "string") {
+      throw new Error("No se pudo obtener un token válido.");
     }
 
-    res
-      .status(200)
-      .send({
-        status: 200,
-        massiveProcessingId: processResponse.data.body.massiveProcessingId,
-      });
+    const processResponse = await axios.post(
+      "https://qa-mpl.autenticsign.com/v3/signing-process/",
+      jsonBody,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      }
+    );
+
+    res.status(200).json({
+      massiveProcessingId: processResponse.data.body.massiveProcessingId,
+    });
   } catch (error) {
     console.error("Error al cargar el proceso:", error);
-
-    // Envía un error al cliente
     res.status(500).json({ error: "No se pudo cargar el proceso" });
   }
 });
+
 
 export default router;
