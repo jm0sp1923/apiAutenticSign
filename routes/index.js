@@ -5,17 +5,15 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send({status:200});
+  res.send({ status: 200 });
 });
-
 
 router.post("/cargarProceso", async function (req, res, next) {
   const { name, lastName, identification, email, phone } = req.body;
 
-  console.log("Variables: ",name, lastName, identification, email, phone);
+  console.log("Variables: ", name, lastName, identification, email, phone);
 
-
-  console.log("req.body: ",req.body)
+  console.log("req.body: ", req.body);
 
   // Obtén el token utilizando el endpoint /obtenerTokenApi
   const tokenRequestBody = {
@@ -33,7 +31,6 @@ router.post("/cargarProceso", async function (req, res, next) {
     );
 
     const token = tokenResponse.data.access_token;
-
 
     // Ahora crea el proceso
     const jsonBody = {
@@ -70,17 +67,28 @@ router.post("/cargarProceso", async function (req, res, next) {
       ],
     };
 
-    const processResponse = await axios.post(
-      "https://qa-mpl.autenticsign.com/v3/signing-process/",
-      jsonBody,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Incluir el token en los encabezados
-        },
-      }
-    );    
+    try {
+      const processResponse = await axios.post(
+        "https://qa-mpl.autenticsign.com/v3/signing-process/",
+        jsonBody,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluir el token en los encabezados
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error al cargar el proceso:", error);
 
-    res.status(200).send({status:200, massiveProcessingId: processResponse.data.body.massiveProcessingId});
+      res.status(500).json({ error: "No se pudo cargar el proceso" });
+    }
+
+    res
+      .status(200)
+      .send({
+        status: 200,
+        massiveProcessingId: processResponse.data.body.massiveProcessingId,
+      });
   } catch (error) {
     console.error("Error al cargar el proceso:", error);
 
