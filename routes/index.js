@@ -11,12 +11,19 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/cargarProceso", async function (req, res, next) {
-  const { representante_legal, cedula_representante_legal, correo, numero_celular } = req.body;
+  let { representante_legal, cedula_representante_legal, correo, numero_celular } = req.body;
+
+  console.log("Body: ", req.body);
 
   console.log("Variables: ", representante_legal, cedula_representante_legal, correo, numero_celular);
 
-  if(!representante_legal || !cedula_representante_legal || !correo || !numero_celular) {
+  if (!representante_legal || !cedula_representante_legal || !correo || !numero_celular) {
     return res.status(400).json({ error: "Faltan campos obligatorios" });
+  }
+
+  // Eliminar el indicativo "+57" del número de celular si existe
+  if (numero_celular.startsWith("+57")) {
+    numero_celular = numero_celular.substring(3); // Elimina los primeros 3 caracteres
   }
 
   try {
@@ -66,7 +73,7 @@ router.post("/cargarProceso", async function (req, res, next) {
       jsonBody,
       {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -79,6 +86,7 @@ router.post("/cargarProceso", async function (req, res, next) {
     res.status(500).json({ error: "No se pudo cargar el proceso" });
   }
 });
+
 
 
 export default router;
