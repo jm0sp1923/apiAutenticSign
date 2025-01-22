@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 
 import indexRouter from "./routes/index.js";
-import usersRouter from "./routes/users.js";
+import consultarEstadoProceso from "./routes/consultarProceso.js";
+import asignarRouter from "./routes/asignarProceso.js";
 
 const app = express();
 
@@ -10,9 +11,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 // Rutas
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-
+app.use(indexRouter);
+app.use(consultarEstadoProceso);
+app.use(asignarRouter);
 // Manejo de rutas no definidas
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });

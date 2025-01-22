@@ -1,4 +1,5 @@
 import axios from "axios";
+import "dotenv/config";
 
 const tokenRequestBody = {
   audience: process.env.AUDIENCE,
@@ -6,6 +7,8 @@ const tokenRequestBody = {
   client_id: process.env.CLIENT_ID,
   client_secret: process.env.CLIENT_SECRET,
 };
+
+
 
 const getTokenApi = async () => {
   try {
