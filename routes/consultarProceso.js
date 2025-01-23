@@ -24,15 +24,19 @@ router.post("/consultarEstadoProceso", async function (req, res, next) {
         headers: {
           Authorization: `Bearer ${token}`, // Correct format for the Authorization header
         },
-      }
+      },
+      
     );
+
+    console.log("processResponse.data: ", processResponse.data);
+
 
     res.status(200).json({
       ProcessEstatus: processResponse.data.body.processes[0]?.status || "Desconocido"
     });
   } catch (error) {
-    console.error("Error al cargar el proceso:", error.message || error);
-    res.status(500).json({ error: "No se pudo cargar el proceso" });
+    console.error("Error al consultar el estado del proceso:", error.message || error);
+    res.status(500).json({ error: "No se pudo consultar el estado del proceso" });
   }
 });
 
