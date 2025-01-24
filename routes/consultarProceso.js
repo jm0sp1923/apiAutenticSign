@@ -28,8 +28,6 @@ router.post("/consultarEstadoProceso", async function (req, res, next) {
       
     );
 
-    console.log("processResponse.data: ", processResponse.data);
-
 
     res.status(200).json({
       ProcessEstatus: processResponse.data.body.processes[0]?.status || "Desconocido"
