@@ -22,7 +22,7 @@ router.post("/cargarProceso", async function (req, res, next) {
 
   // Eliminar el indicativo "+57" del número de celular si existe
 
-  if (numero_celular = typeof("") && numero_celular.startsWith("+57")) {
+  if (typeof numero_celular === "string" && numero_celular.startsWith("+57")) {
     numero_celular = numero_celular.substring(3); // Elimina los primeros 3 caracteres
   }
 
