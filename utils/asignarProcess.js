@@ -1,12 +1,7 @@
 import getTokenApi from "./getTokenApi.js";
 import axios from "axios";
 
-async function asignarProceso(
-  representante_legal,
-  cedula_representante_legal,
-  correo,
-  numero_celular
-) {
+async function asignarProceso(representante_legal,cedula_representante_legal,correo,numero_celular) {
 
   const jsonBody = {
     sendCompletionNotification: true,

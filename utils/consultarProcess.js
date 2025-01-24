@@ -18,10 +18,7 @@ async function consultarProceso(massiveProcessingId) {
         },
       }
     );
-
-    const processEstatus =
-      processResponse.data.body?.processes?.[0]?.status || "Estado no encontrado";
-
+    const processEstatus = processResponse.data.body?.processes?.[0]?.status || "Estado no encontrado";
     return processEstatus;
   } catch (error) {
     console.error("Error al consultar el proceso:", error.message);
