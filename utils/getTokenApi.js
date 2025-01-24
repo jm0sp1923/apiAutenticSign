@@ -8,8 +8,6 @@ const tokenRequestBody = {
   client_secret: process.env.CLIENT_SECRET,
 };
 
-
-
 const getTokenApi = async () => {
   try {
     const tokenResponse = await axios.post(

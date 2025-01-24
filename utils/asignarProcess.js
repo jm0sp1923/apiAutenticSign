@@ -42,10 +42,9 @@ async function asignarProceso(
   };
 
   try {
-    // Esperar el token de la función asíncrona
+  
     const token = await getTokenApi();
 
-    // Verificar si el token fue obtenido exitosamente
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
     }
@@ -62,7 +61,6 @@ async function asignarProceso(
 
     const massiveProcessingId = processResponse.data.body.massiveProcessingId;
     
-
     return massiveProcessingId;
 
   } catch (error) {
