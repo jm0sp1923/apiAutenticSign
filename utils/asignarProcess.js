@@ -44,13 +44,9 @@ async function asignarProceso(representante_legal,cedula_representante_legal,cor
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
     }
-
     const END_POINT_CARGAR_PROCESO_API_AUTENTIC = process.env.END_POINT_API_AUTNETIC_SIGN;
-
-    console.log("END_POINT_CARGAR_PROCESO_API_AUTENTIC", END_POINT_CARGAR_PROCESO_API_AUTENTIC);
-
     const processResponse = await axios.post(
-      END_POINT_CARGAR_PROCESO_API_AUTENTIC+"/",
+      END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,
       {
         headers: {
@@ -58,9 +54,6 @@ async function asignarProceso(representante_legal,cedula_representante_legal,cor
         },
       }
     );
-
-    console.log("processResponse", processResponse);
-
     const massiveProcessingId = processResponse.data.body.massiveProcessingId;
     
     return massiveProcessingId;
