@@ -66,7 +66,7 @@ async function asignarProceso(representante_legal,cedula_representante_legal,cor
     return massiveProcessingId;
 
   } catch (error) {
-    console.error("Error al asignar el proceso:", error.message);
+    console.error("Error al asignar el utils:", error.message);
     throw error; 
   }
 }

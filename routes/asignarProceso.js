@@ -19,7 +19,7 @@ router.post("/cargarProceso", async function (req, res) {
     
     res.status(200).json({massiveProcessingId,});
   } catch (error) {
-    console.error("Error al cargar el proceso:", error.message);
+    console.error("Error al cargar el proceso router:", error.message);
     res.status(500).json({ error: "No se pudo cargar el proceso" });
   }
 });
