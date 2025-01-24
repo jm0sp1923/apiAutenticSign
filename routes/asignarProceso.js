@@ -84,7 +84,7 @@ router.post("/cargarProceso", async function (req, res) {
         },
       }
     );
-
+    console.log("processResponse: ", processResponse.data.body.massiveProcessingId);
     res.status(200).json({
       massiveProcessingId: processResponse.data.body.massiveProcessingId,
     });
