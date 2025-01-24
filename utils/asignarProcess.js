@@ -1,5 +1,6 @@
 import getTokenApi from "./getTokenApi.js";
 import axios from "axios";
+import "dotenv/config";
 
 async function asignarProceso(representante_legal,cedula_representante_legal,correo,numero_celular) {
 
@@ -44,8 +45,12 @@ async function asignarProceso(representante_legal,cedula_representante_legal,cor
       throw new Error("No se pudo obtener un token válido.");
     }
 
+    const END_POINT_CARGAR_PROCESO_API_AUTENTIC = process.env.END_POINT_API_AUTNETIC_SIGN;
+
+    console.log("END_POINT_CARGAR_PROCESO_API_AUTENTIC", END_POINT_CARGAR_PROCESO_API_AUTENTIC);
+
     const processResponse = await axios.post(
-      "https://qa-mpl.autenticsign.com/v3/signing-process/",
+      END_POINT_CARGAR_PROCESO_API_AUTENTIC+"/",
       jsonBody,
       {
         headers: {
@@ -53,6 +58,8 @@ async function asignarProceso(representante_legal,cedula_representante_legal,cor
         },
       }
     );
+
+    console.log("processResponse", processResponse);
 
     const massiveProcessingId = processResponse.data.body.massiveProcessingId;
     

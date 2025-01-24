@@ -3,10 +3,12 @@ import "dotenv/config";
 
 const tokenRequestBody = {audience: process.env.AUDIENCE,grant_type: process.env.GRANT_TYPE,client_id: process.env.CLIENT_ID,client_secret: process.env.CLIENT_SECRET};
 
+const END_POINT_GET_TOKEN_API_AUTNETIC_SIGN = process.env.END_POINT_GET_TOKEN_API_AUTNETIC_SIGN;
+
 const getTokenApi = async () => {
   try {
     const tokenResponse = await axios.post(
-      "https://authorizer.autenticsign.com/v2/authorizer/getToken",
+      END_POINT_GET_TOKEN_API_AUTNETIC_SIGN,
       tokenRequestBody
     );
 
