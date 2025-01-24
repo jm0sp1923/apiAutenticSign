@@ -53,7 +53,6 @@ router.post("/cargarProceso", async function (req, res, next) {
               role: "APPROVER",
               authMethods: ["OTP"],
             },
-            5,
           ],
           documents: [
             {
