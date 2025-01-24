@@ -4,7 +4,7 @@ import axios from "axios";
 
 const router = express.Router();
 
-router.post("/cargarProceso", async function (req, res, next) {
+router.post("/cargarProceso", async function (req, res) {
   let {
     representante_legal,
     cedula_representante_legal,
@@ -20,10 +20,8 @@ router.post("/cargarProceso", async function (req, res, next) {
       .json({ error: "Correo o celular deben estar presentes" });
   }
 
-  // Eliminar el indicativo "+57" del número de celular si existe
-
   if (typeof numero_celular === "string" && numero_celular.startsWith("+57")) {
-    numero_celular = numero_celular.substring(3); // Elimina los primeros 3 caracteres
+    numero_celular = numero_celular.substring(3);
   }
 
   console.log(
