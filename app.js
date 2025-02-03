@@ -3,18 +3,22 @@ import cors from "cors";
 
 import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
-import asignarRouter from "./routes/asignarProceso.js";
+import asignarProceso from "./routes/asignarProceso.js";
+import asignarProcesoPlantilla from "./routes/asignarProcesoPlantilla.js";
 
 const app = express();
 
 // Middleware para analizar cuerpos JSON
 app.use(express.json());
 app.use(cors());
+
 // Rutas
+
 app.use(indexRouter);
 app.use(consultarEstadoProceso);
-app.use(asignarRouter);
-// Manejo de rutas no definidas
+app.use(asignarProceso);
+app.use(asignarProcesoPlantilla);
+
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });
 });
