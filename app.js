@@ -4,7 +4,7 @@ import cors from "cors";
 import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
 import asignarProceso from "./routes/asignarProceso.js";
-import asignarProcesoPlantilla from "./routes/asignarProcesoPlantilla.js";
+
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(indexRouter);
 app.use(consultarEstadoProceso);
 app.use(asignarProceso);
-app.use(asignarProcesoPlantilla);
+
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });
@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 });
 
 // Puerto
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

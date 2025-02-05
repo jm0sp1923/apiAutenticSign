@@ -1,43 +1,66 @@
-import requests
+import sys
+import json
+import base64
+import os
 from docx import Document
+from comtypes.client import CreateObject 
 
+try:
+    # Leer el JSON desde stdin
+    data = json.loads(sys.stdin.read())
 
-data = {
-    "1": "19",
-    "2": "Juan Sebastian Munoz Perez",
-    "3": "Santiago de Chile",
-    "4": "1109184891",
-    "7": "Tarifa segun zona",
-    "9": "Diez y nueve (19) AGOSTO de 2024",
-    "10": "Juan David Quintero Garcia",
-    "11": "1109184892",
-    "12": "AFFI SAS PRUEBA",
-};
+    # Cargar el documento
+    doc_path = os.path.join(os.getcwd(), "public", "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx")
 
-# Cargar el documento
-doc_path = "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx"
-doc = Document(doc_path)
+    # Verificar si el archivo existe
+    if not os.path.exists(doc_path):
+        raise FileNotFoundError(f"El archivo {doc_path} no se encuentra.")
+    
+    doc = Document(doc_path)
 
-# Diccionario de reemplazo basado en los datos de la API
-reemplazos = {
-    "NUMERO CONTRATO": data.get("1", "N/A"),
-    "NOMBRE PERSONA NATURAL": data.get("2", "N/A"),
-    "CIUDAD INMOBILIARIA": data.get("3", "N/A"),
-    "CEDULA": data.get("4", "N/A"),
-    "TARIFA SEGÚN ZONA": data.get("7", "N/A"),
-    "DIA LETRAS (DIA NUMEROS) MES de AÑO":data.get("9", "N/A"),
-    "NOMBRE REPRESENTANTE LEGAL": data.get("10", "N/A"),
-    "CEDULA REPRESENTANTE LEGAL": data.get("11", "N/A"),
-    "NOMBRE ESTABLECIMIENTO COMERCIO": data.get("12", "N/A")
-}
+    # Diccionario de reemplazo
+    reemplazos = {
+        "{{NUMERO CONTRATO}}": data.get("1", "N/A"),
+        "{{NOMBRE PERSONA NATURAL}}": data.get("2", "N/A"),
+        "{{CIUDAD INMOBILIARIA}}": data.get("3", "N/A"),
+        "{{CEDULA}}": data.get("4", "N/A"),
+        "{{TARIFA SEGÚN ZONA}}": data.get("7", "N/A"),
+        "{{DIA LETRAS (DIA NUMEROS) MES de AÑO}}": data.get("9", "N/A"),
+        "{{NOMBRE REPRESENTANTE LEGAL}}": data.get("10", "N/A"),
+        "{{CEDULA REPRESENTANTE LEGAL}}": data.get("11", "N/A"),
+        "{{NOMBRE ESTABLECIMIENTO COMERCIO}}": data.get("12", "N/A"),
+    }
 
-# Reemplazo en el documento
-for paragraph in doc.paragraphs:
-    for key, value in reemplazos.items():
-        if key in paragraph.text:
-            paragraph.text = paragraph.text.replace(key, value)
+    # Reemplazo en el documento
+    for paragraph in doc.paragraphs:
+        for key, value in reemplazos.items():
+            if key in paragraph.text:
+                paragraph.text = paragraph.text.replace(key, value)
 
-# Guardar el documento actualizado
-doc.save("Contrato_Actualizado.docx")
+    # Guardar en formato .docx
+    docx_path = "Contrato_Actualizado.docx"
+    doc.save(docx_path)
 
-print("Documento actualizado y guardado como 'Contrato_Actualizado.docx'.")
+    # Convertir a PDF (solo en Windows)
+    pdf_path = "Contrato_Actualizado.pdf"
+    word = CreateObject("Word.Application")
+    doc = word.Documents.Open(os.path.abspath(docx_path))
+    doc.SaveAs(os.path.abspath(pdf_path), FileFormat=17)  
+    doc.Close()
+    word.Quit()
+
+    # Convertir el PDF a Base64
+    with open(pdf_path, "rb") as pdf_file:
+        base64_pdf = base64.b64encode(pdf_file.read()).decode("utf-8")
+
+    # Imprimir solo el Base64
+    print(base64_pdf)
+
+    # Limpiar archivos temporales
+    os.remove(docx_path)
+    os.remove(pdf_path)
+
+except FileNotFoundError as e:
+    print(f"Error: {e}")
+except Exception as e:
+    print(f"Error inesperado: {e}")
