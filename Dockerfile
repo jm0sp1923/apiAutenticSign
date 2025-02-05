@@ -1,11 +1,12 @@
 # Usar una imagen base con Node.js (para Express) y Python (para ejecutar archivos .py)
 FROM node:18-slim
 
-# Actualizar y agregar dependencias necesarias (Python, pip y venv)
+# Actualizar y agregar dependencias necesarias (Python, pip, venv y LibreOffice)
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
+    libreoffice \
     && rm -rf /var/lib/apt/lists/*
 
 # Establecer el directorio de trabajo dentro del contenedor
