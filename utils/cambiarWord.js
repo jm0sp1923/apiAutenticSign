@@ -27,10 +27,10 @@ function cambiarWord(data) {
   
         pythonProcess.on("close", (code) => {
           if (errorData) {
-            console.error("Python Error:", errorData.trim());  // Log Python errors
+            console.error("Python Error:", errorData.trim());  
             reject(`Error en Python: ${errorData.trim()}`);
           } else if (code === 0) {
-            resolve(base64Data.trim()); // ✅ Resuelve la promesa con el PDF en Base64
+            resolve(base64Data.trim());
           } else {
             reject(`Python salió con código ${code}`);
           }

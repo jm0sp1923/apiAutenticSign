@@ -2,14 +2,15 @@ import sys
 import json
 import base64
 import os
+import platform
 from docx import Document
 
-# Detectar si se está ejecutando en Windows
-import platform
+# Detectar el sistema operativo
 is_windows = platform.system() == "Windows"
 
 if is_windows:
     from comtypes.client import CreateObject
+import subprocess
 
 try:
     # Leer el JSON desde stdin
@@ -21,10 +22,11 @@ try:
     # Verificar si el archivo existe
     if not os.path.exists(doc_path):
         raise FileNotFoundError(f"El archivo {doc_path} no se encuentra.")
-    
+
+    # Cargar el documento
     doc = Document(doc_path)
 
-    # Diccionario de reemplazo (ajustado con las claves correctas)
+    # Diccionario de reemplazo
     reemplazos = {
         "{{NUMERO CONTRATO}}": str(data.get("numero_de_contrato", "N/A")),
         "{{CIUDAD INMOBILIARIA}}": data.get("ciudad_inmobiliaria", "N/A"),
@@ -36,13 +38,13 @@ try:
         "{{CORREO}}": data.get("correo", "N/A"),
     }
 
-    # Reemplazo en el documento
+    # Reemplazar valores en el documento
     for paragraph in doc.paragraphs:
         for key, value in reemplazos.items():
             if key in paragraph.text:
                 paragraph.text = paragraph.text.replace(key, value)
 
-    # Guardar en formato .docx
+    # Guardar el documento actualizado
     docx_path = "Contrato_Actualizado.docx"
     doc.save(docx_path)
 
@@ -50,7 +52,7 @@ try:
     pdf_path = "Contrato_Actualizado.pdf"
 
     if is_windows:
-        # Usar Microsoft Word para convertir a PDF
+        # Usar Microsoft Word para convertir a PDF en Windows
         word = CreateObject("Word.Application")
         word.Visible = False
         doc = word.Documents.Open(os.path.abspath(docx_path))
@@ -58,25 +60,28 @@ try:
         doc.Close()
         word.Quit()
     else:
-        # Usar LibreOffice en Linux/Mac
-        os.system(f"libreoffice --headless --convert-to pdf {docx_path}")
+        # Usar LibreOffice en Linux/Mac (silenciando salida)
+        subprocess.run(
+            ["libreoffice", "--headless", "--convert-to", "pdf", docx_path, "--outdir", os.getcwd()],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+        )
 
     # Verificar que el PDF se haya creado
     if not os.path.exists(pdf_path):
         raise FileNotFoundError("Error al convertir el archivo a PDF.")
 
-    # Convertir el PDF a Base64
+    # Leer el PDF y convertir a Base64
     with open(pdf_path, "rb") as pdf_file:
         base64_pdf = base64.b64encode(pdf_file.read()).decode("utf-8")
 
-    # Imprimir solo el Base64
+    # Imprimir solo el contenido Base64
     print(base64_pdf)
 
-    # Limpiar archivos temporales
+    # Eliminar archivos temporales
     os.remove(docx_path)
     os.remove(pdf_path)
 
 except FileNotFoundError as e:
-    print(f"Error: {e}")
+    print(f"Error: {e}", file=sys.stderr)
 except Exception as e:
-    print(f"Error inesperado: {e}")
+    print(f"Error inesperado: {e}", file=sys.stderr)

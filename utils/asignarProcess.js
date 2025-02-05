@@ -72,6 +72,8 @@ async function asignarProceso(
       ],
     };
 
+    console.log("JSON Body for API:", JSON.stringify(jsonBody));
+
     const token = await getTokenApi();
 
     if (!token || typeof token !== "string") {

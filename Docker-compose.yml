@@ -1,6 +1,6 @@
 services:
   app:
-    image: autenticSign
+    image: autenticsign
     build: .
     env_file:
       - .env
