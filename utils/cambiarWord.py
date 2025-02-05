@@ -3,13 +3,19 @@ import json
 import base64
 import os
 from docx import Document
-from comtypes.client import CreateObject 
+
+# Detectar si se está ejecutando en Windows
+import platform
+is_windows = platform.system() == "Windows"
+
+if is_windows:
+    from comtypes.client import CreateObject
 
 try:
     # Leer el JSON desde stdin
     data = json.loads(sys.stdin.read())
 
-    # Cargar el documento
+    # Ruta del documento de plantilla
     doc_path = os.path.join(os.getcwd(), "public", "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx")
 
     # Verificar si el archivo existe
@@ -18,17 +24,16 @@ try:
     
     doc = Document(doc_path)
 
-    # Diccionario de reemplazo
+    # Diccionario de reemplazo (ajustado con las claves correctas)
     reemplazos = {
-        "{{NUMERO CONTRATO}}": data.get("1", "N/A"),
-        "{{NOMBRE PERSONA NATURAL}}": data.get("2", "N/A"),
-        "{{CIUDAD INMOBILIARIA}}": data.get("3", "N/A"),
-        "{{CEDULA}}": data.get("4", "N/A"),
-        "{{TARIFA SEGÚN ZONA}}": data.get("7", "N/A"),
-        "{{DIA LETRAS (DIA NUMEROS) MES de AÑO}}": data.get("9", "N/A"),
-        "{{NOMBRE REPRESENTANTE LEGAL}}": data.get("10", "N/A"),
-        "{{CEDULA REPRESENTANTE LEGAL}}": data.get("11", "N/A"),
-        "{{NOMBRE ESTABLECIMIENTO COMERCIO}}": data.get("12", "N/A"),
+        "{{NUMERO CONTRATO}}": str(data.get("numero_de_contrato", "N/A")),
+        "{{CIUDAD INMOBILIARIA}}": data.get("ciudad_inmobiliaria", "N/A"),
+        "{{CEDULA}}": str(data.get("cedula", "N/A")),
+        "{{NOMBRE REPRESENTANTE LEGAL}}": data.get("nombre_representante_legal", "N/A"),
+        "{{CEDULA REPRESENTANTE LEGAL}}": str(data.get("cedula_representante_legal", "N/A")),
+        "{{NOMBRE ESTABLECIMIENTO COMERCIO}}": data.get("nombre_establecimiento_comercio", "N/A"),
+        "{{NUMERO CELULAR}}": str(data.get("numero_celular", "N/A")),
+        "{{CORREO}}": data.get("correo", "N/A"),
     }
 
     # Reemplazo en el documento
@@ -41,13 +46,24 @@ try:
     docx_path = "Contrato_Actualizado.docx"
     doc.save(docx_path)
 
-    # Convertir a PDF (solo en Windows)
+    # Convertir a PDF según el sistema operativo
     pdf_path = "Contrato_Actualizado.pdf"
-    word = CreateObject("Word.Application")
-    doc = word.Documents.Open(os.path.abspath(docx_path))
-    doc.SaveAs(os.path.abspath(pdf_path), FileFormat=17)  
-    doc.Close()
-    word.Quit()
+
+    if is_windows:
+        # Usar Microsoft Word para convertir a PDF
+        word = CreateObject("Word.Application")
+        word.Visible = False
+        doc = word.Documents.Open(os.path.abspath(docx_path))
+        doc.SaveAs(os.path.abspath(pdf_path), FileFormat=17)  
+        doc.Close()
+        word.Quit()
+    else:
+        # Usar LibreOffice en Linux/Mac
+        os.system(f"libreoffice --headless --convert-to pdf {docx_path}")
+
+    # Verificar que el PDF se haya creado
+    if not os.path.exists(pdf_path):
+        raise FileNotFoundError("Error al convertir el archivo a PDF.")
 
     # Convertir el PDF a Base64
     with open(pdf_path, "rb") as pdf_file:
