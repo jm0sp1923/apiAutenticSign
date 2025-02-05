@@ -3,6 +3,12 @@ import axios from "axios";
 import "dotenv/config";
 import cambiarWord from "./cambiarWord.js";
 
+
+function limpiarBase64(base64) {
+  const index = base64.indexOf("JVBER");
+  return index !== -1 ? base64.substring(index) : base64;
+}
+
 async function asignarProceso(
   numero_de_contrato,
   nombre_persona_natural,
@@ -30,8 +36,11 @@ async function asignarProceso(
 
   try {
   
-    const pdfConvertBase64 = await cambiarWord(datosContrato);
+    let pdfConvertBase64 = await cambiarWord(datosContrato);
     
+    pdfConvertBase64 = limpiarBase64(pdfConvertBase64);
+  
+
     // Check if PDF conversion is successful
     if (!pdfConvertBase64 || pdfConvertBase64.length < 50) {
       console.error("PDF convertido inválido");
@@ -72,7 +81,7 @@ async function asignarProceso(
       ],
     };
 
-    console.log("JSON Body for API:", JSON.stringify(jsonBody));
+
 
     const token = await getTokenApi();
 
