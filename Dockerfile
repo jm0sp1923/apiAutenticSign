@@ -1,6 +1,9 @@
 # Usar una imagen base con Node.js (para Express) y Python (para ejecutar archivos .py)
 FROM node:18-slim
 
+# Instalar LibreOffice
+RUN apt-get update && apt-get install -y libreoffice
+
 # Actualizar y agregar dependencias necesarias (Python, pip, venv y LibreOffice)
 RUN apt-get update && apt-get install -y \
     python3 \

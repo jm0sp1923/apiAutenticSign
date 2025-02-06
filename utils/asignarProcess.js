@@ -23,15 +23,15 @@ async function asignarProceso(
   correo
 ) {
   const datosContrato = {
-    1: numero_de_contrato,
-    2: nombre_persona_natural,
-    3: ciudad_inmobiliaria,
-    4: cedula,
-    7: tarifa_segun_zona,
-    9: fecha,
-    10: nombre_representante_legal,
-    11: cedula_representante_legal,
-    12: nombre_establecimiento_comercio,
+    numero_de_contrato: numero_de_contrato,
+    nombre_persona_natural: nombre_persona_natural,
+    ciudad_inmobiliaria: ciudad_inmobiliaria,
+    cedula: cedula,
+    tarifa_segun_zona: tarifa_segun_zona,
+    fecha: fecha,
+    nombre_representante_legal: nombre_representante_legal,
+    cedula_representante_legal: cedula_representante_legal,
+    nombre_establecimiento_comercio: nombre_establecimiento_comercio,
   };
 
   try {
@@ -39,10 +39,11 @@ async function asignarProceso(
     let pdfConvertBase64 = await cambiarWord(datosContrato);
     
     pdfConvertBase64 = limpiarBase64(pdfConvertBase64);
-  
+    
+    //console.log("pdfConvertBase64: ", pdfConvertBase64);
 
     // Check if PDF conversion is successful
-    if (!pdfConvertBase64 || pdfConvertBase64.length < 50) {
+    if (pdfConvertBase64.indexOf("JVBER") === -1) {
       console.error("PDF convertido inválido");
       throw new Error("El archivo PDF convertido no es válido.");
     }
@@ -70,7 +71,7 @@ async function asignarProceso(
           documents: [
             {
               content: pdfConvertBase64,
-              fileName: "test.pdf",
+              fileName: "test.docx",
             },
           ],
           subject: "Prueba SIGNER",
@@ -81,7 +82,7 @@ async function asignarProceso(
       ],
     };
 
-
+    console.log("jsonBody: ", JSON.stringify(jsonBody));
 
     const token = await getTokenApi();
 
