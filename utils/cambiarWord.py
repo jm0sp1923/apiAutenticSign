@@ -9,13 +9,13 @@ try:
     # Leer el JSON desde stdin
     data = json.loads(sys.stdin.read())
 
-    # Cargar el documento
-    doc_path = os.path.join(os.getcwd(), "", "public", "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx")
+    # Ruta del documento original
+    doc_path = os.path.join(os.getcwd(), "public", "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx")
 
     # Verificar si el archivo existe
     if not os.path.exists(doc_path):
         raise FileNotFoundError(f"El archivo {doc_path} no se encuentra.")
-    
+
     doc = Document(doc_path)
 
     # Diccionario de reemplazo
@@ -31,19 +31,22 @@ try:
         "{{NOMBRE ESTABLECIMIENTO COMERCIO}}": data.get("nombre_establecimiento_comercio", "N/A"),
     }
 
-    # Reemplazo en el documento
+    # Reemplazo en los párrafos completos para evitar problemas con los runs
     for paragraph in doc.paragraphs:
+        texto_original = paragraph.text
         for key, value in reemplazos.items():
-            if key in paragraph.text:
-                paragraph.text = paragraph.text.replace(key, value)
+            texto_original = texto_original.replace(key, value)
+        paragraph.text = texto_original  # Sobreescribir el texto completo sin perder formato
 
-    # Guardar el documento temporalmente como .docx
+    # Guardar el documento actualizado como .docx
     docx_path = "Contrato_Actualizado.docx"
     doc.save(docx_path)
 
     # Convertir el .docx a PDF usando LibreOffice
     pdf_path = "Contrato_Actualizado.pdf"
-    subprocess.run([r"/usr/bin/soffice", "--headless", "--convert-to", "pdf", docx_path], check=True)
+    subprocess.run([
+        "/usr/bin/soffice", "--headless", "--convert-to", "pdf:writer_pdf_Export", "--outdir", os.getcwd(), docx_path
+    ], check=True)
 
     # Convertir el PDF a Base64
     with open(pdf_path, "rb") as pdf_file:
@@ -52,8 +55,9 @@ try:
     # Guardar el Base64 en un archivo de texto
     with open("pdf_base64.txt", "w") as text_file:
         text_file.write(base64_pdf)
-        
-    print(base64_pdf)  
+
+    # Imprimir el Base64 para su uso
+    print(base64_pdf)
 
     # Limpiar archivos temporales
     os.remove(docx_path)

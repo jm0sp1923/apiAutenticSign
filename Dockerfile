@@ -2,7 +2,10 @@
 FROM node:18-slim
 
 # Instalar LibreOffice
-RUN apt-get update && apt-get install -y libreoffice
+RUN apt-get update && apt-get install -y \
+    libreoffice \
+    fonts-liberation \
+    fontconfig
 
 # Actualizar y agregar dependencias necesarias (Python, pip, venv y LibreOffice)
 RUN apt-get update && apt-get install -y \
