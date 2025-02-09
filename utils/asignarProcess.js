@@ -100,12 +100,7 @@ async function asignarProceso(
         },
       ],
     };
-    const truncatedContent =
-      jsonBody.processes[0].documents[0].content.substring(0, 100) +
-      "... (truncated)";
-    jsonBody.processes[0].documents[0].content = truncatedContent;
-
-    console.log("jsonBody:", JSON.stringify(jsonBody, null, 2));
+  
 
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
