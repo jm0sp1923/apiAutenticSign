@@ -24,6 +24,13 @@ app.use((req, res, next) => {
 });
 
 
+app.get('/health', (req, res) => {
+  res.status(200).render('200');
+});
+
+app.get('/health', (req, res) => {
+  res.render('Servidor funcionando correctamente');
+});
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
   console.error(err.stack);

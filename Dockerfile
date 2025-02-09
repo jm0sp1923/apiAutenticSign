@@ -3,8 +3,8 @@ FROM node:18-slim
 
 # Instalar LibreOffice
 RUN apt-get update && apt-get install -y \
-    libreoffice 
-
+    libreoffice
+ 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
