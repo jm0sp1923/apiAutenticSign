@@ -12,25 +12,28 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Rutas
 
+// Ruta de health
+app.get('/', (req, res) => {
+  res.status(200).send('Hello world');
+});
+
+
+// Ruta de health
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
+
+// Rutas
 app.use(indexRouter);
 app.use(consultarEstadoProceso);
 app.use(asignarProceso);
 
-
+// Middleware para manejar rutas no encontradas
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });
 });
 
-
-app.get('/health', (req, res) => {
-  res.status(200).render('200');
-});
-
-app.get('/health', (req, res) => {
-  res.render('Servidor funcionando correctamente');
-});
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
