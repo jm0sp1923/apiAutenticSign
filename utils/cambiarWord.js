@@ -1,46 +1,43 @@
-import { spawn } from "child_process";
+import { readFileSync, writeFileSync } from "fs";
+import PizZip from "pizzip";
+import Docxtemplater from "docxtemplater";
+import convertToPdf from "./transFormPdfToBase64.js";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
-function cambiarWord(data) {
-    return new Promise((resolve, reject) => {
-      try {
-        // Convertimos a JSON
-        const jsonData = JSON.stringify(data);
+// Obtener __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const outputPdf = join(__dirname, "..", "public");
+
+// Función para reemplazar texto en Word
+async function replaceTextInWord(inputPath, outputPath, replacements) {
+  console.log("📄 Datos de entrada:", replacements);
   
-        // Ejecutamos el script Python
-        const pythonProcess = spawn("python3", ["utils/cambiarWord.py"]);
-  
-        // Enviar los datos a Python a través de `stdin`
-        pythonProcess.stdin.write(jsonData);
-        pythonProcess.stdin.end();
-  
-        // Capturar la salida de `stdout`
-        let base64Data = "";
-        let errorData = "";
-  
-        pythonProcess.stdout.on("data", (data) => {
-          base64Data += data.toString();
-        });
-  
-        pythonProcess.stderr.on("data", (data) => {
-          errorData += data.toString();
-        });
-  
-        pythonProcess.on("close", (code) => {
-          if (errorData) {
-            console.error("Python Error:", errorData.trim());  
-            reject(`Error en Python: ${errorData.trim()}`);
-          } else if (code === 0) {
-            resolve(base64Data.trim());
-          } else {
-            reject(`Python salió con código ${code}`);
-          }
-        });
-      } catch (error) {
-        console.error("Error in cambiarWord:", error.message);  // Log the error in cambiarWord
-        reject(`Error en cambiarWord: ${error.message}`);
-      }
+  try {
+    const content = readFileSync(inputPath, "binary");
+    const zip = new PizZip(content);
+    const doc = new Docxtemplater(zip, {
+      delimiters: { start: "{{", end: "}}" },
     });
-  }
-  
 
-export default cambiarWord;
+    doc.render(replacements);
+
+    const buffer = doc.getZip().generate({ type: "nodebuffer" });
+    writeFileSync(outputPath, buffer);
+    console.log("✅ Documento Word generado:", outputPath);
+  } catch (error) {
+    console.error("❌ Error al generar el documento Word:", error);
+    throw error; // Lanza el error para que pueda ser manejado
+  }
+
+  try {
+    const result = await convertToPdf(outputPath, outputPdf);
+    return result.pdfBase64; // Retorna el Base64 correctamente
+  } catch (error) {
+    console.error("❌ Error al generar el PDF en base64:", error);
+    throw error; // Lanza el error si ocurre
+  }
+}
+
+export default replaceTextInWord;

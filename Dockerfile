@@ -3,27 +3,10 @@ FROM node:18-slim
 
 # Instalar LibreOffice
 RUN apt-get update && apt-get install -y \
-    libreoffice \
-    fonts-liberation \
-    fontconfig
-
-# Actualizar y agregar dependencias necesarias (Python, pip, venv y LibreOffice)
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    python3-venv \
-    libreoffice \
-    && rm -rf /var/lib/apt/lists/*
+    libreoffice 
 
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
-
-# Copiar el archivo requirements.txt para instalar dependencias de Python
-COPY requirements.txt /app/
-
-# Crear un entorno virtual para Python y instalar las dependencias
-RUN python3 -m venv /app/venv \
-    && /app/venv/bin/pip install --no-cache-dir -r /app/requirements.txt
 
 # Copiar el resto de los archivos del proyecto al contenedor
 COPY . .

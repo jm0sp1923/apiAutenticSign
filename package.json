@@ -14,14 +14,17 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "docx": "^9.1.1",
+    "docx-pdf": "^0.0.1",
     "docx4js": "^3.3.0",
     "docxtemplater": "^3.59.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "fontkit": "^2.0.4",
     "fs": "^0.0.1-security",
     "mammoth": "^1.9.0",
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
+    "pdf-lib": "^1.17.1",
     "pizzip": "^3.1.8"
   }
 }

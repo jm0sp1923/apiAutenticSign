@@ -1,13 +1,23 @@
 import getTokenApi from "./getTokenApi.js";
 import axios from "axios";
 import "dotenv/config";
-import cambiarWord from "./cambiarWord.js";
+import replaceTextInWord from "./cambiarWord.js";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
+// Obtener __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-function limpiarBase64(base64) {
-  const index = base64.indexOf("JVBER");
-  return index !== -1 ? base64.substring(index) : base64;
-}
+// Rutas de los archivos
+const inputFile = join(
+  __dirname,
+  "..",
+  "public",
+  "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx"
+);
+
+const outputFile = join(__dirname, "..", "public", "contrato_generado.docx");
 
 async function asignarProceso(
   numero_de_contrato,
@@ -23,30 +33,39 @@ async function asignarProceso(
   correo
 ) {
   const datosContrato = {
-    numero_de_contrato: numero_de_contrato,
-    nombre_persona_natural: nombre_persona_natural,
-    ciudad_inmobiliaria: ciudad_inmobiliaria,
-    cedula: cedula,
-    tarifa_segun_zona: tarifa_segun_zona,
-    fecha: fecha,
-    nombre_representante_legal: nombre_representante_legal,
-    cedula_representante_legal: cedula_representante_legal,
-    nombre_establecimiento_comercio: nombre_establecimiento_comercio,
+    NUMERO_CONTRATO: numero_de_contrato,
+    NOMBRE_PERSONA_NATURAL: nombre_persona_natural,
+    CIUDAD_INMOBILIARIA: ciudad_inmobiliaria,
+    CEDULA: cedula,
+    TARIFA_SEGUN_ZONA: tarifa_segun_zona,
+    FECHA: fecha,
+    NOMBRE_REPRESENTANTE_LEGAL: nombre_representante_legal,
+    CEDULA_REPRESENTANTE_LEGAL: cedula_representante_legal,
+    NOMBRE_ESTABLECIMIENTO_COMERCIO: nombre_establecimiento_comercio,
   };
 
   try {
-  
-    let pdfConvertBase64 = await cambiarWord(datosContrato);
-    
-    pdfConvertBase64 = limpiarBase64(pdfConvertBase64);
-    
-    //console.log("pdfConvertBase64: ", pdfConvertBase64);
+    let pdfConvertBase64 = await replaceTextInWord(
+      inputFile,
+      outputFile,
+      datosContrato
+    );
 
     // Check if PDF conversion is successful
     if (pdfConvertBase64.indexOf("JVBER") === -1) {
       console.error("PDF convertido inválido");
       throw new Error("El archivo PDF convertido no es válido.");
     }
+
+    const token = await getTokenApi();
+
+    if (!token || typeof token !== "string") {
+      console.error("Token inválido");
+      throw new Error("No se pudo obtener un token válido.");
+    }
+
+    const END_POINT_CARGAR_PROCESO_API_AUTENTIC =
+      process.env.END_POINT_API_AUTNETIC_SIGN;
 
     // ✅ Cuerpo del JSON
     const jsonBody = {
@@ -71,29 +90,22 @@ async function asignarProceso(
           documents: [
             {
               content: pdfConvertBase64,
-              fileName: "test.docx",
+              fileName: "CONTRATO FIANZA COLECTIVA.pdf",
             },
           ],
-          subject: "Prueba SIGNER",
+          subject: "Firma de contrato",
           message: "Buen día, remito documento de prueba de firma.",
           order: "",
           expirationDate: "",
         },
       ],
     };
+    const truncatedContent =
+      jsonBody.processes[0].documents[0].content.substring(0, 100) +
+      "... (truncated)";
+    jsonBody.processes[0].documents[0].content = truncatedContent;
 
-    console.log("jsonBody: ", JSON.stringify(jsonBody));
-
-    const token = await getTokenApi();
-
-    if (!token || typeof token !== "string") {
-      console.error("Token inválido");
-      throw new Error("No se pudo obtener un token válido.");
-    }
-
-  
-    const END_POINT_CARGAR_PROCESO_API_AUTENTIC =
-      process.env.END_POINT_API_AUTNETIC_SIGN;
+    console.log("jsonBody:", JSON.stringify(jsonBody, null, 2));
 
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
@@ -109,10 +121,9 @@ async function asignarProceso(
 
     return massiveProcessingId;
   } catch (error) {
-    console.error("Error en asignarProceso:", error.message);  // Log the error in asignarProceso
+    console.error("Error en asignarProceso:", error.message);
     throw error;
   }
 }
-
 
 export default asignarProceso;
