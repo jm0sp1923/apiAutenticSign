@@ -3,8 +3,8 @@ import cors from "cors";
 
 import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
-import asignarProceso from "./routes/asignarProceso.js";
-
+import asignarProcesoNatural from "./routes/asignarProcesoNatural.js";
+import asignarProcesoJuridico from "./routes/asignarProcesoJuridico.js";
 
 const app = express();
 
@@ -27,8 +27,8 @@ app.get('/health', (req, res) => {
 // Rutas
 app.use(indexRouter);
 app.use(consultarEstadoProceso);
-app.use(asignarProceso);
-
+app.use(asignarProcesoNatural);
+app.use(asignarProcesoJuridico);
 // Middleware para manejar rutas no encontradas
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });

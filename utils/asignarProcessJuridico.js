@@ -14,34 +14,32 @@ const inputFile = join(
   __dirname,
   "..",
   "public",
-  "MODELO CONTRATO FIANZA COLECTIVA PERSONA NATURAL.docx"
+  "MODELO CONTRATO FIANZA COLECTIVA PERSONA JURIDICA.docx"
 );
 
 const outputFile = join(__dirname, "..", "public", "contrato_generado.docx");
 
 async function asignarProceso(
   numero_de_contrato,
-  nombre_persona_natural,
+  nombre_inmobiliaria,
   ciudad_inmobiliaria,
-  cedula,
-  tarifa_segun_zona,
-  fecha,
+  nit_inmobiliaria,
   nombre_representante_legal,
   cedula_representante_legal,
-  nombre_establecimiento_comercio,
-  numero_celular,
-  correo
+  ciudad_expedicion,
+  tarifa_segun_zona,
+  fecha
 ) {
   const datosContrato = {
     NUMERO_CONTRATO: numero_de_contrato,
-    NOMBRE_PERSONA_NATURAL: nombre_persona_natural,
+    NOMBRE_INMOBILIARIA: nombre_inmobiliaria,
     CIUDAD_INMOBILIARIA: ciudad_inmobiliaria,
-    CEDULA: cedula,
-    TARIFA_SEGUN_ZONA: tarifa_segun_zona,
-    FECHA: fecha,
+    NIT_INMOBILIARIA: nit_inmobiliaria,
     NOMBRE_REPRESENTANTE_LEGAL: nombre_representante_legal,
     CEDULA_REPRESENTANTE_LEGAL: cedula_representante_legal,
-    NOMBRE_ESTABLECIMIENTO_COMERCIO: nombre_establecimiento_comercio,
+    CIUDAD_EXPEDICION: ciudad_expedicion,
+    TARIFA_SEGUN_ZONA: tarifa_segun_zona,
+    FECHA: fecha,
   };
 
   try {
@@ -97,10 +95,10 @@ async function asignarProceso(
           message: "Buen día, remito documento de prueba de firma.",
           order: "",
           expirationDate: "",
+          sendEmail: true,
         },
       ],
     };
-  
 
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
