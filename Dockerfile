@@ -1,9 +1,7 @@
 # Usar una imagen base con Node.js (para Express) y Python (para ejecutar archivos .py)
 FROM node:18-slim
 
-# Instalar LibreOffice
-RUN apt-get update && apt-get install -y \
-    libreoffice
+
  
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
