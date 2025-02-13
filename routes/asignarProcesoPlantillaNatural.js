@@ -1,11 +1,11 @@
 import express from "express";
-import asignarProceso from "../utils/asignarProcessNatural.js";
+import asignarProceso from "../utils/asignarProcessPlantillaNatural.js";
 
 const router = express.Router();
 
 //Asignar proceso persona natural
 
-router.post("/cargarProcesoNatural", async function (req, res) {
+router.post("/cargarProcesoPlantilla", async function (req, res) {
   let {
     numero_de_contrato,
     nombre_persona_natural,
@@ -19,6 +19,7 @@ router.post("/cargarProcesoNatural", async function (req, res) {
     numero_celular,
     correo,
   } = req.body;
+
 
   if (!correo && !numero_celular) {
     return res

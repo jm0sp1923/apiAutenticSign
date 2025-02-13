@@ -1,37 +1,21 @@
 import getTokenApi from "./getTokenApi.js";
 import axios from "axios";
 import "dotenv/config";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
-
-// Obtener __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Rutas de los archivos
-const inputFile = join(
-  __dirname,
-  "..",
-  "public",
-  "MODELO CONTRATO FIANZA COLECTIVA PERSONA JURIDICA.docx"
-);
-
-const outputFile = join(__dirname, "..", "public", "contrato_generado.docx");
 
 async function asignarProceso(
   numero_de_contrato,
-      nombre_inmobiliaria,
-      ciudad_inmobiliaria,
-      nit_inmobiliaria,
-      nombre_representante_legal,
-      cedula_representante_legal,
-      ciudad_expedicion,
-      tarifa_segun_zona,
-      numero_celular,
-      correo,
+  nombre_persona_natural,
+  ciudad_inmobiliaria,
+  cedula,
+  tarifa_segun_zona,
+  fecha,
+  nombre_representante_legal,
+  cedula_representante_legal,
+  nombre_establecimiento_comercio,
+  numero_celular,
+  correo
 ) {
   try {
-
     const token = await getTokenApi();
 
     if (!token || typeof token !== "string") {
@@ -51,51 +35,47 @@ async function asignarProceso(
               "enterpriseId": "1109184891",
               "senderEmail": "juan.munoz@affi.net",
               "senderIdentification": "1109184891",
-              "idTemplate": "59da4f97",
+              "idTemplate": "d53e5632",
               "filenames": [
-                  "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf"
+                  "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_NATURAL.pdf"
               ],
               "ensambled": {
-                  "form-field-syg19": numero_de_contrato,
-                  "form-field-l6gnk": nombre_inmobiliaria,
-                  "form-field-sz8eo": ciudad_inmobiliaria,
-                  "form-field-0sate": nit_inmobiliaria,
-                  "form-field-hqcwa": nombre_representante_legal,
-                  "form-field-9ienq": cedula_representante_legal,
-                  "form-field-cuiwb": ciudad_expedicion,
-                  "form-field-jfuoh": ciudad_inmobiliaria,
-                  "form-field-kr1zk": ciudad_inmobiliaria,
-                  "form-field-qxieq": tarifa_segun_zona,
-                  "form-field-ials1": ciudad_inmobiliaria,
-                  "form-field-9865c": nombre_representante_legal,
-                  "form-field-pzk79": cedula_representante_legal,
-                  "form-field-eu75z": nombre_inmobiliaria,
-                  "form-field-9oqr6": nit_inmobiliaria
-
+                  "form-field-22aol": numero_de_contrato,
+                  "form-field-dn0c8": nombre_persona_natural,
+                  "form-field-l4k56": ciudad_inmobiliaria,
+                  "form-field-fcpsp": cedula,
+                  "form-field-m3idc": ciudad_inmobiliaria,
+                  "form-field-qv90o": ciudad_inmobiliaria,
+                  "form-field-liitp": tarifa_segun_zona,
+                  "form-field-yv1qd": ciudad_inmobiliaria,
+                  "form-field-4rdkt": fecha,
+                  "form-field-uvur4": nombre_representante_legal,
+                  "form-field-7y34y": cedula_representante_legal,
+                  "form-field-tl4la": nombre_establecimiento_comercio,
               },
               "signers": [
-                  {
-                      "name": "Lilian Paola",
-                      "lastName": "Holguín Orrego",
-                      "identification": "000011112",
-                      "email": "juan.munoz.p@correounivalle.edu.co",
-                      "phone": "",
-                      "roleTemplate": "comercial",
-                      "authMethods": [
-                          "OTP"
-                      ]
-                  },
                   {
                       "name": "CESAR AUGUSTO",
                       "lastName": " TEZNA CASTAÑO",
                       "identification": "000011112",
                       "email": "juan.munoz.p@correounivalle.edu.co",
                       "phone": "",
-                      "roleTemplate": "comercial",
+                      "roleTemplate": "gerencia",
                       "authMethods": [
                           "OTP"
                       ]
                   },
+                  {
+                    "name": "Lilian Paola",
+                    "lastName": "Holguín Orrego",
+                    "identification": "1112956229",
+                    "email": "parejamayra197@gmail.com",
+                    "phone": "",
+                    "roleTemplate": "comercial",
+                    "authMethods": [
+                        "OTP"
+                    ]
+                },
                   {
                       "name": nombre_representante_legal,
                       "lastName": "Dos",
@@ -111,6 +91,10 @@ async function asignarProceso(
           }
       ]
   }
+    
+
+    console.log("jsonBody", JSON.stringify(jsonBody,2,null));
+
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,

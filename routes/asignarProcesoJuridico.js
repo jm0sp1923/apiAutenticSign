@@ -1,5 +1,5 @@
 import express from "express";
-import asignarProceso from "../utils/asignarProcessNatural.js";
+import asignarProceso from "../utils/asignarProcessJuridico.js";
 
 const router = express.Router();
 
@@ -15,7 +15,6 @@ router.post("/cargarProcesoJuridico", async function (req, res) {
     cedula_representante_legal,
     ciudad_expedicion,
     tarifa_segun_zona,
-    fecha,
     numero_celular,
     correo,
   } = req.body;
@@ -41,8 +40,7 @@ router.post("/cargarProcesoJuridico", async function (req, res) {
       ciudad_expedicion,
       tarifa_segun_zona,
       numero_celular,
-      correo,
-      fecha
+      correo
     );
     res.status(200).json({ massiveProcessingId });
   } catch (error) {

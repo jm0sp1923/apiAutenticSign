@@ -3,9 +3,8 @@ import cors from "cors";
 
 import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
-import asignarProcesoNatural from "./routes/asignarProcesoNatural.js";
 import asignarProcesoJuridico from "./routes/asignarProcesoJuridico.js";
-import asignarProcesoPlantilla from "./routes/asignarProcesoPlantilla.js";
+import asignarProcesoPlantilla from "./routes/asignarProcesoPlantillaNatural.js";
 
 const app = express();
 
@@ -28,7 +27,6 @@ app.get('/health', (req, res) => {
 // Rutas
 app.use(indexRouter);
 app.use(consultarEstadoProceso);
-app.use(asignarProcesoNatural);
 app.use(asignarProcesoJuridico);
 app.use(asignarProcesoPlantilla);
 // Middleware para manejar rutas no encontradas
