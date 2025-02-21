@@ -62,24 +62,13 @@ async function asignarProceso(
                   "name": "Lilian Paola",
                   "lastName": "Holguín Orrego",
                   "identification": "1112956229",
-                  "email": "",
-                  "phone": "edgar.camacho@affi.net",
+                  "email": "jm0spnequi@gmail.com",
+                  "phone": "",
                   "roleTemplate": "comercial",
                   "authMethods": [
                       "OTP"
                   ]
                 },
-                {
-                  "name": "CESAR AUGUSTO",
-                  "lastName": " TEZNA CASTAÑO",
-                  "identification": "94492994",
-                  "email": "jm0sp1923@gmail.com",
-                  "phone": "",
-                  "roleTemplate": "gerencia",
-                  "authMethods": [
-                      "OTP"
-                  ]
-                   },
                   {
                       "name": nombre_representante_legal,
                       "lastName": "",
@@ -90,7 +79,18 @@ async function asignarProceso(
                       "authMethods": [
                           "OTP"
                       ]
-                  }
+                  },
+                  {
+                    "name": "CESAR AUGUSTO",
+                    "lastName": " TEZNA CASTAÑO",
+                    "identification": "94492994",
+                    "email": "jm0sp1923@gmail.com",
+                    "phone": "",
+                    "roleTemplate": "gerencia",
+                    "authMethods": [
+                        "OTP"
+                    ]
+                     },
               ]
           }
       ]
