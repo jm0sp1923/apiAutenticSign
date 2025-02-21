@@ -82,8 +82,8 @@ async function asignarProceso(
                       "name": "Lilian Paola",
                       "lastName": "Holguín Orrego",
                       "identification": "1112956229",
-                      "email": "jm0spnequi@gmail.com",
-                      "phone": "",
+                      "email": "",
+                      "phone": "3104056601",
                       "roleTemplate": "comercial",
                       "authMethods": [
                           "OTP"
@@ -94,7 +94,7 @@ async function asignarProceso(
                       "lastName": "Dos",
                       "identification": cedula_representante_legal,
                       "email": correo,
-                      "phone": numero_celular,
+                      //"phone": numero_celular,
                       "roleTemplate": "cliente",
                       "authMethods": [
                           "OTP"
@@ -103,7 +103,7 @@ async function asignarProceso(
                     "name": "CESAR AUGUSTO",
                     "lastName": " TEZNA CASTAÑO",
                     "identification": "000011112",
-                    "email": "jm0sp1923@gmail.com",
+                    "email": "juan.munoz.p@correounivalle.edu.co",
                     "phone": "",
                     "roleTemplate": "gerencia",
                     "authMethods": [
