@@ -32,6 +32,9 @@ async function asignarProceso(
 ) {
   try {
 
+    //cambiar a fecha dinamica
+    let fecha = "Diez y nueve (19) AGOSTO de 2024";
+    nombre_inmobiliaria = nombre_inmobiliaria + ","
     const token = await getTokenApi();
 
     if (!token || typeof token !== "string") {
@@ -51,46 +54,36 @@ async function asignarProceso(
               "enterpriseId": "1109184891",
               "senderEmail": "juan.munoz@affi.net",
               "senderIdentification": "1109184891",
-              "idTemplate": "59da4f97",
+              "idTemplate": "73be14dd",
               "filenames": [
                   "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf"
               ],
               "ensambled": {
-                  "form-field-syg19": numero_de_contrato,
-                  "form-field-l6gnk": nombre_inmobiliaria,
-                  "form-field-sz8eo": ciudad_inmobiliaria,
-                  "form-field-0sate": nit_inmobiliaria,
-                  "form-field-hqcwa": nombre_representante_legal,
-                  "form-field-9ienq": cedula_representante_legal,
-                  "form-field-cuiwb": ciudad_expedicion,
-                  "form-field-jfuoh": ciudad_inmobiliaria,
-                  "form-field-kr1zk": ciudad_inmobiliaria,
-                  "form-field-qxieq": tarifa_segun_zona,
-                  "form-field-ials1": ciudad_inmobiliaria,
-                  "form-field-9865c": nombre_representante_legal,
-                  "form-field-pzk79": cedula_representante_legal,
-                  "form-field-eu75z": nombre_inmobiliaria,
-                  "form-field-9oqr6": nit_inmobiliaria
+                  "form-field-rc141": numero_de_contrato,
+                  "form-field-niafs": nombre_inmobiliaria,
+                  "form-field-jw5xr": ciudad_inmobiliaria,
+                  "form-field-4poiq": nit_inmobiliaria,
+                  "form-field-lnpuu": nombre_representante_legal,
+                  "form-field-6pf6d": cedula_representante_legal,
+                  "form-field-b2822": ciudad_expedicion,
+                  "form-field-742n9": ciudad_inmobiliaria,
+                  "form-field-umtxa": ciudad_inmobiliaria,
+                  "form-field-4esxf": tarifa_segun_zona,
+                  "form-field-d95f7": ciudad_inmobiliaria,
+                  "form-field-044t9": fecha,
+                  "form-field-rvonu": nombre_representante_legal,
+                  "form-field-6itjq": cedula_representante_legal,
+                  "form-field-j4i39": nombre_inmobiliaria,
+                  "form-field-ngeyo": nit_inmobiliaria
 
               },
               "signers": [
                   {
                       "name": "Lilian Paola",
                       "lastName": "Holguín Orrego",
-                      "identification": "000011112",
-                      "email": "juan.munoz.p@correounivalle.edu.co",
-                      "phone": "",
-                      "roleTemplate": "comercial",
-                      "authMethods": [
-                          "OTP"
-                      ]
-                  },
-                  {
-                      "name": "CESAR AUGUSTO",
-                      "lastName": " TEZNA CASTAÑO",
-                      "identification": "000011112",
-                      "email": "juan.munoz.p@correounivalle.edu.co",
-                      "phone": "",
+                      "identification": "1112956229",
+                      "email": "",
+                      "phone": "jm0spnequi@gmail.com",
                       "roleTemplate": "comercial",
                       "authMethods": [
                           "OTP"
@@ -106,7 +99,17 @@ async function asignarProceso(
                       "authMethods": [
                           "OTP"
                       ]
-                  }
+                  },{
+                    "name": "CESAR AUGUSTO",
+                    "lastName": " TEZNA CASTAÑO",
+                    "identification": "000011112",
+                    "email": "juan.munoz.p@correounivalle.edu.co",
+                    "phone": "",
+                    "roleTemplate": "gerencia",
+                    "authMethods": [
+                        "OTP"
+                    ]
+                },
               ]
           }
       ]
