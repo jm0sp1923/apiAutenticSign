@@ -115,6 +115,9 @@ async function asignarProceso(
           }
       ]
   }
+
+  console.log("jsonBody", JSON.stringify(jsonBody,2,null));
+  
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,
