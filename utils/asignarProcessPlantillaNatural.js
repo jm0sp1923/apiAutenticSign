@@ -62,7 +62,7 @@ async function asignarProceso(
                   "name": "Lilian Paola",
                   "lastName": "Holguín Orrego",
                   "identification": "1112956229",
-                  "email": "alt.f2-5osihmgr@yopmail.com",
+                  "email": "jm0sp@yopmail.com",
                   "phone": "",
                   "roleTemplate": "comercial",
                   "authMethods": [
@@ -82,15 +82,15 @@ async function asignarProceso(
                   },
                   {
                     "name": "CESAR AUGUSTO",
-                    "lastName": " TEZNA CASTAÑO",
+                    "lastName": "TEZNA CASTAÑO",
                     "identification": "94492994",
-                    "email": "edgar.camacho@affi.net",
+                    "email": "jm0sp1923@yopmail.com",
                     "phone": "",
                     "roleTemplate": "gerencia",
                     "authMethods": [
                         "OTP"
                     ]
-                     },
+                   },
               ]
           }
       ]

@@ -78,38 +78,39 @@ async function asignarProceso(
 
               },
               "signers": [
+                {
+                  "name": "Lilian Paola",
+                  "lastName": "Holguín Orrego",
+                  "identification": "1112956229",
+                  "email": "jm0sp@yopmail.com",
+                  "phone": "",
+                  "roleTemplate": "comercial",
+                  "authMethods": [
+                      "OTP"
+                  ]
+                },
                   {
-                      "name": "Lilian Paola",
-                      "lastName": "Holguín Orrego",
-                      "identification": "1112956229",
-                      "email": "alt.f2-5osihmgr@yopmail.com",
-                      "phone": "",
-                      "roleTemplate": "comercial",
+                      "name": nombre_representante_legal,
+                      "lastName": "",
+                      "identification": cedula_representante_legal,
+                      "email": correo,
+                      "phone": numero_celular,
+                      "roleTemplate": "cliente",
                       "authMethods": [
                           "OTP"
                       ]
                   },
                   {
-                      "name": nombre_representante_legal,
-                      "lastName": "Dos",
-                      "identification": cedula_representante_legal,
-                      "email": correo,
-                      //"phone": numero_celular,
-                      "roleTemplate": "cliente",
-                      "authMethods": [
-                          "OTP"
-                      ]
-                  },{
                     "name": "CESAR AUGUSTO",
-                    "lastName": " TEZNA CASTAÑO",
-                    "identification": "000011112",
-                    "email": "edgar.camacho@affi.net",
+                    "lastName": "TEZNA CASTAÑO",
+                    "identification": "94492994",
+                    "email": "jm0sp1923@yopmail.com",
                     "phone": "",
                     "roleTemplate": "gerencia",
                     "authMethods": [
                         "OTP"
                     ]
-                },
+                   },
               ]
           }
       ]
