@@ -8,7 +8,6 @@ async function asignarProceso(
   ciudad_inmobiliaria,
   cedula,
   tarifa_segun_zona,
-  fecha,
   nombre_representante_legal,
   cedula_representante_legal,
   nombre_establecimiento_comercio,
@@ -17,6 +16,11 @@ async function asignarProceso(
 ) {
   try {
     const token = await getTokenApi();
+
+    //cambiar a fecha dinamica
+    let fecha = "Diez y nueve (19) AGOSTO de 2024";
+
+    nombre_persona_natural = nombre_persona_natural + ","
 
     if (!token || typeof token !== "string") {
       console.error("Token inválido");
@@ -35,46 +39,35 @@ async function asignarProceso(
               "enterpriseId": "1109184891",
               "senderEmail": "juan.munoz@affi.net",
               "senderIdentification": "1109184891",
-              "idTemplate": "d53e5632",
+              "idTemplate": "bef2633f",
               "filenames": [
                   "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_NATURAL.pdf"
               ],
               "ensambled": {
-                  "form-field-22aol": numero_de_contrato,
-                  "form-field-dn0c8": nombre_persona_natural,
-                  "form-field-l4k56": ciudad_inmobiliaria,
-                  "form-field-fcpsp": cedula,
-                  "form-field-m3idc": ciudad_inmobiliaria,
-                  "form-field-qv90o": ciudad_inmobiliaria,
-                  "form-field-liitp": tarifa_segun_zona,
-                  "form-field-yv1qd": ciudad_inmobiliaria,
-                  "form-field-4rdkt": fecha,
-                  "form-field-uvur4": nombre_representante_legal,
-                  "form-field-7y34y": cedula_representante_legal,
-                  "form-field-tl4la": nombre_establecimiento_comercio,
+                  "form-field-cv45g": numero_de_contrato,
+                  "form-field-uiq5m": nombre_persona_natural,
+                  "form-field-c3o2k": ciudad_inmobiliaria,
+                  "form-field-10frq": cedula,
+                  "form-field-1soga": ciudad_inmobiliaria,
+                  "form-field-iqfdr": ciudad_inmobiliaria,
+                  "form-field-ymege": tarifa_segun_zona,
+                  "form-field-9w2uo": ciudad_inmobiliaria,
+                  "form-field-6qp0f": fecha,
+                  "form-field-9lc06": nombre_representante_legal,
+                  "form-field-fgta8": cedula_representante_legal,
+                  "form-field-x5eek": nombre_establecimiento_comercio,
               },
               "signers": [
-                  {
-                      "name": "CESAR AUGUSTO",
-                      "lastName": " TEZNA CASTAÑO",
-                      "identification": "000011112",
-                      "email": "juan.munoz.p@correounivalle.edu.co",
-                      "phone": "",
-                      "roleTemplate": "gerencia",
-                      "authMethods": [
-                          "OTP"
-                      ]
-                  },
-                  {
-                    "name": "Lilian Paola",
-                    "lastName": "Holguín Orrego",
-                    "identification": "1112956229",
-                    "email": "parejamayra197@gmail.com",
-                    "phone": "",
-                    "roleTemplate": "comercial",
-                    "authMethods": [
-                        "OTP"
-                    ]
+                {
+                  "name": "Lilian Paola",
+                  "lastName": "Holguín Orrego",
+                  "identification": "1112956229",
+                  "email": "jm0sp@yopmail.com",
+                  "phone": "",
+                  "roleTemplate": "comercial",
+                  "authMethods": [
+                      "OTP"
+                  ]
                 },
                   {
                       "name": nombre_representante_legal,
@@ -86,12 +79,22 @@ async function asignarProceso(
                       "authMethods": [
                           "OTP"
                       ]
-                  }
+                  },
+                  {
+                    "name": "CESAR AUGUSTO",
+                    "lastName": "TEZNA CASTAÑO",
+                    "identification": "94492994",
+                    "email": "jm0sp1923@yopmail.com",
+                    "phone": "",
+                    "roleTemplate": "gerencia",
+                    "authMethods": [
+                        "OTP"
+                    ]
+                   },
               ]
           }
       ]
   }
-    
 
     console.log("jsonBody", JSON.stringify(jsonBody,2,null));
 
