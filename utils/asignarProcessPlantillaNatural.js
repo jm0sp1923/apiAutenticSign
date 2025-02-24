@@ -78,7 +78,7 @@ async function asignarProceso(
                 },
                   {
                       "name": nombre_representante_legal,
-                      "lastName": "Dos",
+                      "lastName": "",
                       "identification": cedula_representante_legal,
                       "email": correo,
                       "phone": numero_celular,
