@@ -1,5 +1,5 @@
 import express from "express";
-import asignarProceso from "../utils/asignarProcessPlantillaNatural.js";
+import asignarProceso from "../utils/asignarProcessNatural.js";
 
 const router = express.Router();
 

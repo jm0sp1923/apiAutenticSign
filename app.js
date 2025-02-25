@@ -4,7 +4,7 @@ import cors from "cors";
 import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
 import asignarProcesoJuridico from "./routes/asignarProcesoJuridico.js";
-import asignarProcesoPlantilla from "./routes/asignarProcesoPlantillaNatural.js";
+import asignarProcesoPlantilla from "./routes/asignarProcesoNatural.js";
 import asignarProceso from "./routes/asignarProceso.js";
 const app = express();
 
