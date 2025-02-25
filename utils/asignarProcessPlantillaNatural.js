@@ -77,7 +77,7 @@ async function asignarProceso(
                       "phone": numero_celular,
                       "roleTemplate": "cliente",
                       "authMethods": [
-                          "OTP"
+                          "OTP" 
                       ]
                   },
                   {
