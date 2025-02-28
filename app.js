@@ -5,7 +5,7 @@ import indexRouter from "./routes/index.js";
 import consultarEstadoProceso from "./routes/consultarProceso.js";
 import asignarProcesoJuridico from "./routes/asignarProcesoJuridico.js";
 import asignarProcesoPlantilla from "./routes/asignarProcesoPlantillaNatural.js";
-
+import consultarArchivo from "./routes/consultarArchivo.js";
 const app = express();
 
 // Middleware para analizar cuerpos JSON
@@ -29,6 +29,7 @@ app.use(indexRouter);
 app.use(consultarEstadoProceso);
 app.use(asignarProcesoJuridico);
 app.use(asignarProcesoPlantilla);
+app.use(consultarArchivo);
 // Middleware para manejar rutas no encontradas
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });
