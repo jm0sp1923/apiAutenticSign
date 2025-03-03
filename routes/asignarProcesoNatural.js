@@ -1,11 +1,11 @@
 import express from "express";
-import asignarProceso from "../utils/asignarProcessPlantillaNatural.js";
+import asignarProceso from "../utils/asignarProcessNatural.js";
 
 const router = express.Router();
 
 //Asignar proceso persona natural
 
-router.post("/cargarProcesoPlantilla", async function (req, res) {
+router.post("/cargarProcesoNatural", async function (req, res) {
   let {
     numero_de_contrato,
     nombre_persona_natural,
@@ -19,6 +19,8 @@ router.post("/cargarProcesoPlantilla", async function (req, res) {
     correo,
   } = req.body;
 
+  console.log(req)
+
 
   if (!correo && !numero_celular) {
     return res
@@ -31,6 +33,7 @@ router.post("/cargarProcesoPlantilla", async function (req, res) {
   }
 
   try {
+
     const massiveProcessingId = await asignarProceso(
       numero_de_contrato,
       nombre_persona_natural,
@@ -42,7 +45,7 @@ router.post("/cargarProcesoPlantilla", async function (req, res) {
       nombre_establecimiento_comercio,
       numero_celular,
       correo
-    );
+    ); 
     res.status(200).json({ massiveProcessingId });
   } catch (error) {
     console.error("Error al cargar el proceso router:", error.message);

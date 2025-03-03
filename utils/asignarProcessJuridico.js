@@ -1,40 +1,24 @@
 import getTokenApi from "./getTokenApi.js";
+import obtenerFormatoFecha from "./obtenerFormatoFecha.js";
 import axios from "axios";
 import "dotenv/config";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
-
-// Obtener __dirname en ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Rutas de los archivos
-const inputFile = join(
-  __dirname,
-  "..",
-  "public",
-  "MODELO CONTRATO FIANZA COLECTIVA PERSONA JURIDICA.docx"
-);
-
-const outputFile = join(__dirname, "..", "public", "contrato_generado.docx");
 
 async function asignarProceso(
   numero_de_contrato,
-      nombre_inmobiliaria,
-      ciudad_inmobiliaria,
-      nit_inmobiliaria,
-      nombre_representante_legal,
-      cedula_representante_legal,
-      ciudad_expedicion,
-      tarifa_segun_zona,
-      numero_celular,
-      correo,
+  nombre_inmobiliaria,
+  ciudad_inmobiliaria,
+  nit_inmobiliaria,
+  nombre_representante_legal,
+  cedula_representante_legal,
+  ciudad_expedicion,
+  tarifa_segun_zona,
+  numero_celular,
+  correo
 ) {
   try {
-
     //cambiar a fecha dinamica
-    let fecha = "Diez y nueve (19) AGOSTO de 2024";
-    nombre_inmobiliaria = nombre_inmobiliaria + ","
+    let fecha = obtenerFormatoFecha();
+    nombre_inmobiliaria = nombre_inmobiliaria + ",";
     const token = await getTokenApi();
 
     if (!token || typeof token !== "string") {
@@ -91,7 +75,7 @@ async function asignarProceso(
                 },
                   {
                       "name": nombre_representante_legal,
-                      "lastName": "",
+                      "lastName": "Prueba",
                       "identification": cedula_representante_legal,
                       "email": correo,
                       "phone": numero_celular,
@@ -116,8 +100,8 @@ async function asignarProceso(
       ]
   }
 
-  console.log("jsonBody", JSON.stringify(jsonBody,2,null));
-  
+    console.log("jsonBody", JSON.stringify(jsonBody, 2, null));
+
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,

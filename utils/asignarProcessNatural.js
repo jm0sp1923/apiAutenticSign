@@ -1,4 +1,5 @@
 import getTokenApi from "./getTokenApi.js";
+import obtenerFormatoFecha from "./obtenerFormatoFecha.js";
 import axios from "axios";
 import "dotenv/config";
 
@@ -18,7 +19,7 @@ async function asignarProceso(
     const token = await getTokenApi();
 
     //cambiar a fecha dinamica
-    let fecha = "Diez y nueve (19) AGOSTO de 2024";
+    let fecha = obtenerFormatoFecha();
 
     nombre_persona_natural = nombre_persona_natural + ","
 
@@ -77,7 +78,7 @@ async function asignarProceso(
                       "phone": numero_celular,
                       "roleTemplate": "cliente",
                       "authMethods": [
-                          "OTP"
+                          "OTP" 
                       ]
                   },
                   {
