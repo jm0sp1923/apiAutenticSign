@@ -11,7 +11,6 @@ router.post("/cargarProcesoNatural", async function (req, res) {
     nombre_persona_natural,
     ciudad_inmobiliaria,
     cedula,
-    tarifa_segun_zona,
     nombre_representante_legal,
     cedula_representante_legal,
     nombre_establecimiento_comercio,
@@ -19,7 +18,7 @@ router.post("/cargarProcesoNatural", async function (req, res) {
     correo,
   } = req.body;
 
-  console.log(req)
+  console.log(req.body)
 
 
   if (!correo && !numero_celular) {
@@ -39,7 +38,6 @@ router.post("/cargarProcesoNatural", async function (req, res) {
       nombre_persona_natural,
       ciudad_inmobiliaria,
       cedula,
-      tarifa_segun_zona,
       nombre_representante_legal,
       cedula_representante_legal,
       nombre_establecimiento_comercio,

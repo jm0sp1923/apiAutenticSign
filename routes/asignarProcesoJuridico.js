@@ -14,10 +14,11 @@ router.post("/cargarProcesoJuridico", async function (req, res) {
     nombre_representante_legal,
     cedula_representante_legal,
     ciudad_expedicion,
-    tarifa_segun_zona,
     numero_celular,
     correo,
   } = req.body;
+
+  console.log(req.body)
 
   if (!correo && !numero_celular) {
     return res
@@ -38,7 +39,6 @@ router.post("/cargarProcesoJuridico", async function (req, res) {
       nombre_representante_legal,
       cedula_representante_legal,
       ciudad_expedicion,
-      tarifa_segun_zona,
       numero_celular,
       correo
     );

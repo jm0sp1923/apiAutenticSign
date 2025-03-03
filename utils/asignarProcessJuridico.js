@@ -1,5 +1,6 @@
 import getTokenApi from "./getTokenApi.js";
 import obtenerFormatoFecha from "./obtenerFormatoFecha.js";
+import tarifaSegunZona from "./tarifaSegunZona.js";
 import axios from "axios";
 import "dotenv/config";
 
@@ -11,7 +12,6 @@ async function asignarProceso(
   nombre_representante_legal,
   cedula_representante_legal,
   ciudad_expedicion,
-  tarifa_segun_zona,
   numero_celular,
   correo
 ) {
@@ -25,6 +25,10 @@ async function asignarProceso(
       console.error("Token inválido");
       throw new Error("No se pudo obtener un token válido.");
     }
+
+    let tarifa_segun_zona = tarifaSegunZona(ciudad_inmobiliaria) + "%";
+    
+
 
     const END_POINT_CARGAR_PROCESO_API_AUTENTIC =
       process.env.END_POINT_API_AUTNETIC_SIGN;

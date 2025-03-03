@@ -1,5 +1,6 @@
 import getTokenApi from "./getTokenApi.js";
 import obtenerFormatoFecha from "./obtenerFormatoFecha.js";
+import tarifaSegunZona from "./tarifaSegunZona.js";
 import axios from "axios";
 import "dotenv/config";
 
@@ -8,7 +9,6 @@ async function asignarProceso(
   nombre_persona_natural,
   ciudad_inmobiliaria,
   cedula,
-  tarifa_segun_zona,
   nombre_representante_legal,
   cedula_representante_legal,
   nombre_establecimiento_comercio,
@@ -22,6 +22,9 @@ async function asignarProceso(
     let fecha = obtenerFormatoFecha();
 
     nombre_persona_natural = nombre_persona_natural + ","
+
+    let tarifa_segun_zona = tarifaSegunZona(ciudad_inmobiliaria)  + "%";
+
 
     if (!token || typeof token !== "string") {
       console.error("Token inválido");
