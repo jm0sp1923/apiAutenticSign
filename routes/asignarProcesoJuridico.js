@@ -26,6 +26,10 @@ router.post("/cargarProcesoJuridico", async function (req, res) {
       .json({ error: "Correo o celular deben estar presentes" });
   }
 
+  if(!numero_celular){
+    numero_celular = "";
+  }
+
   if (typeof numero_celular === "string" && numero_celular.startsWith("+57")) {
     numero_celular = numero_celular.substring(3);
   }
