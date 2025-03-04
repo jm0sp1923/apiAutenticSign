@@ -56,7 +56,7 @@ async function asignarProceso(
                   "form-field-iqfdr": ciudad_inmobiliaria,
                   "form-field-ymege": tarifa_segun_zona,
                   "form-field-9w2uo": ciudad_inmobiliaria,
-                  "form-field-6qp0f": fecha,
+                  "form-field-6qp0f": fecha+".",
                   "form-field-9lc06": nombre_representante_legal,
                   "form-field-fgta8": cedula_representante_legal,
                   "form-field-x5eek": nombre_establecimiento_comercio,

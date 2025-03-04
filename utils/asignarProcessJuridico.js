@@ -42,41 +42,31 @@ async function asignarProceso(
               "enterpriseId": "1109184891",
               "senderEmail": "juan.munoz@affi.net",
               "senderIdentification": "1109184891",
-              "idTemplate": "f5fec65f",
+              "idTemplate": "c54bc0fe",
               "filenames": [
-                  "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf"
+                  "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf",
+                  "REGLAMENTO_DE_FIANZA_AFFI_8.pdf"
               ],
               "ensambled": {
-                  "form-field-o2mje": numero_de_contrato,
-                  "form-field-mtsnf": nombre_inmobiliaria,
-                  "form-field-yonr9": ciudad_inmobiliaria,
-                  "form-field-isyqe": nit_inmobiliaria,
-                  "form-field-k38wo": nombre_representante_legal,
-                  "form-field-5begt": cedula_representante_legal,
-                  "form-field-qvx3d": ciudad_expedicion,
-                  "form-field-owey4": ciudad_inmobiliaria,
-                  "form-field-lqb05": ciudad_inmobiliaria,
-                  "form-field-3kvqd": tarifa_segun_zona,
-                  "form-field-lhgqh": ciudad_inmobiliaria,
-                  "form-field-qh3t8": fecha,
-                  "form-field-49a9c": nombre_representante_legal,
-                  "form-field-ql6wr": cedula_representante_legal,
-                  "form-field-4cmic": nombre_inmobiliaria,
-                  "form-field-syil7": nit_inmobiliaria
+                  "form-field-dq61m": numero_de_contrato,
+                  "form-field-flk1g": nombre_inmobiliaria,
+                  "form-field-rmf8d": ciudad_inmobiliaria,
+                  "form-field-28i19": nit_inmobiliaria,
+                  "form-field-vzp97": nombre_representante_legal,
+                  "form-field-xoiyg": cedula_representante_legal,
+                  "form-field-m7ajg": ciudad_expedicion,
+                  "form-field-hkt3u": ciudad_inmobiliaria,
+                  "form-field-bjpcn": ciudad_inmobiliaria,
+                  "form-field-3s1wo": tarifa_segun_zona,
+                  "form-field-1cquu": ciudad_inmobiliaria+".",
+                  "form-field-2ny4j": fecha+".",
+                  "form-field-vrp4n": nombre_representante_legal,
+                  "form-field-uvk3e": cedula_representante_legal,
+                  "form-field-zfr5h": nombre_inmobiliaria,
+                  "form-field-yucuv": nit_inmobiliaria
 
               },
               "signers": [
-                {
-                  "name": "Lilian Paola",
-                  "lastName": "Holguín Orrego",
-                  "identification": "1112956229",
-                  "email": "jm0sp@yopmail.com",
-                  "phone": "",
-                  "roleTemplate": "comercial",
-                  "authMethods": [
-                      "OTP"
-                  ]
-                },
                   {
                       "name": nombre_representante_legal,
                       "lastName": "Prueba",
@@ -87,6 +77,16 @@ async function asignarProceso(
                       "authMethods": [
                           "OTP"
                       ]
+                  },{
+                    "name": "Lilian Paola",
+                    "lastName": "Holguín Orrego",
+                    "identification": "1112956229",
+                    "email": "jm0sp@yopmail.com",
+                    "phone": "",
+                    "roleTemplate": "comercial",
+                    "authMethods": [
+                        "OTP"
+                    ]
                   },
                   {
                     "name": "CESAR AUGUSTO",
