@@ -2,33 +2,26 @@ import axios from "axios";
 import getTokenApi from "./getTokenApi.js";
 import "dotenv/config";
 
-async function consultarArchivo(massiveProcessingId) {
+async function consultarArchivo(processId) {
   try {
     const token = await getTokenApi();
-
-    console.log("token", token);
 
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
     }
 
-    const END_POINT_API_GET_FILE =
-      process.env.END_POINT_API_GET_FILE;
+    console.log(processId);
 
-    const processResponse = await axios.get(
-      `${END_POINT_API_GET_FILE}${massiveProcessingId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const processEstatus =
-      processResponse.body ||
-      "Estado no encontrado";
-    return processEstatus;
+    const END_POINT_API_GET_FILE = `${process.env.END_POINT_API_GET_FILE}/${processId}`;
+
+    const processResponse = await axios.get(END_POINT_API_GET_FILE, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const fileProcess = processResponse.data.body.files;
+    return fileProcess;
   } catch (error) {
-    console.error("Error al consultar el proceso:", error.message);
     throw error;
   }
 }

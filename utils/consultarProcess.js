@@ -24,7 +24,11 @@ async function consultarProceso(massiveProcessingId) {
     const processEstatus =
       processResponse.data.body?.processes?.[0]?.status ||
       "Estado no encontrado";
-    return processEstatus;
+    
+
+    const processId = processResponse.data.body.processes?.[0].processId;
+
+    return {processEstatus, processId};
   } catch (error) {
     console.error("Error al consultar el proceso:", error.message);
     throw error;
