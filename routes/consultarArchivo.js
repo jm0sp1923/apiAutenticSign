@@ -4,17 +4,21 @@ import consultarArchivo from "../utils/consultarArchivo.js";
 const router = express.Router();
 
 router.post("/consultarArchivo", async function (req, res) {
-  const { massiveProcessingId } = req.body;
-
-  console.log("massiveProcessingId", massiveProcessingId);
+  const { processId } = req.body;
 
   try {
-    const ProcessEstatus = await consultarArchivo(massiveProcessingId);
-    console.log("ProcessEstatus", ProcessEstatus);
-    res.status(200).json({ProcessEstatus: ProcessEstatus,});
+    const files = await consultarArchivo(processId);
+    
+    console.log("Respuesta final:", files);
+    
+    res.status(200).json({ files });
   } catch (error) {
-    res.status(500).json({ error: "No se pudo consultar el estado del proceso" });
+    console.error("Error en la consulta de archivos:", error);
+    
+    res.status(500).json({ error: "No se pudo consultar los archivos del proceso" });
   }
 });
+
+
 export default router;
     

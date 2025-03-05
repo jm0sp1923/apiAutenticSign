@@ -9,11 +9,15 @@ router.post("/consultarEstadoProceso", async function (req, res) {
   console.log("massiveProcessingId", massiveProcessingId);
 
   try {
-    const ProcessEstatus = await consultarEstadoProceso(massiveProcessingId);
-    console.log("ProcessEstatus", ProcessEstatus);
-    res.status(200).json({ProcessEstatus: ProcessEstatus,});
+    const { processEstatus, processId } = await consultarEstadoProceso(massiveProcessingId);
+    
+    console.log("ProcessEstatus", processEstatus);
+    console.log("ProcessId", processId);
+
+    res.status(200).json({ ProcessEstatus: processEstatus, ProcessId: processId });
   } catch (error) {
     res.status(500).json({ error: "No se pudo consultar el estado del proceso" });
   }
 });
+
 export default router;

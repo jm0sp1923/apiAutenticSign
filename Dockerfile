@@ -12,8 +12,6 @@ COPY . .
 # Instalar las dependencias de Node.js
 RUN npm install
 
-# Configurar el PATH para que el contenedor use el entorno virtual de Python
-ENV PATH="/app/venv/bin:$PATH"
 
 # Exponer el puerto en el que el servidor Express escuchará
 EXPOSE 3000
