@@ -25,6 +25,7 @@
     "nodemon": "^3.1.9",
     "path": "^0.12.7",
     "pdf-lib": "^1.17.1",
-    "pizzip": "^3.1.8"
+    "pizzip": "^3.1.8",
+    "request-promise-native": "^1.0.9"
   }
 }
