@@ -5,6 +5,9 @@ const tokenRequestBody = {audience: process.env.AUDIENCE,grant_type: process.env
 
 const END_POINT_GET_TOKEN_API_AUTNETIC_SIGN = process.env.END_POINT_GET_TOKEN_API_AUTNETIC_SIGN;
 
+console.log("END_POINT_GET_TOKEN_API_AUTNETIC_SIGN", END_POINT_GET_TOKEN_API_AUTNETIC_SIGN);
+console.log("tokenRequestBody", tokenRequestBody);
+
 const getTokenApi = async () => {
   try {
     const tokenResponse = await axios.post(
@@ -12,7 +15,7 @@ const getTokenApi = async () => {
       tokenRequestBody
     );
 
-    console.log("🔑 Token obtenido correctamente de Autentic", tokenResponse);
+    console.log("🔑 Token obtenido correctamente de Autentic", tokenResponse.data);
 
     const token = {token: tokenResponse.data.access_token, expiresIn: tokenResponse.data.expires_in};
 
