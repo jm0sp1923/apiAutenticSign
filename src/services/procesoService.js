@@ -7,7 +7,7 @@ import axios from "axios";
 import "dotenv/config";
 
 
-async function asignarProcesoService(tipoProceso, datos) {
+async function asignarProcesoService(tipo_persona, datos) {
   const token = await getValidToken();
   try {
     if (!token || typeof token !== "string") {
@@ -21,11 +21,11 @@ async function asignarProcesoService(tipoProceso, datos) {
 
     let jsonBody;
 
-    switch (tipoProceso) {
-      case "persona_juridica":
+    switch (tipo_persona) {
+      case "Jurídica":
         jsonBody = personaJuridicaTemplate(datos, tarifa_segun_zona, fecha);
         break;
-      case "persona_natural":
+      case "Natural":
         jsonBody = personaNaturalTemplate(datos, tarifa_segun_zona, fecha);
         break;
       default:

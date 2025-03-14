@@ -1,10 +1,10 @@
 import { asignarProcesoService, consultarEstadoProcesoService } from "../services/procesoService.js";
 
 const cargarProcesoController = async (req, res) => {
-  const { tipo_proceso, ...datos } = req.body;
+  const { tipo_persona, ...datos } = req.body;
 
   try {
-    const massiveProcessingId = await asignarProcesoService(tipo_proceso, datos);
+    const massiveProcessingId = await asignarProcesoService(tipo_persona, datos);
     res.status(200).json({ massiveProcessingId });
   } catch (error) {
     console.error("Error en cargarProceso:", error.message);
