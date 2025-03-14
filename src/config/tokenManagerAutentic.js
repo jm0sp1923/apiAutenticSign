@@ -1,9 +1,5 @@
 import fs from "fs/promises";
-import path from "path";
-import getTokenApi from "../utils//auth/getTokenAutentic.js";
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import getTokenApi from "../utils/auth/getTokenAutentic.js";
 
 const tokenFilePath =  "/tmp/tokenAutentic.json";
 let tokenCache = null; 
@@ -47,7 +43,7 @@ async function getValidAutenticToken() {
     return newToken.token;
 
   } catch (error) {
-    console.error("❌ Error al obtener un token válido de HubSpot:", error.message);
+    console.error("❌ Error al obtener un token válido de Autentic:", error.message);
     throw error;
   }
 }

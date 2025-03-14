@@ -12,6 +12,8 @@ const getTokenApi = async () => {
       tokenRequestBody
     );
 
+    console.log("🔑 Token obtenido correctamente de Autentic", tokenResponse);
+
     const token = {token: tokenResponse.data.access_token, expiresIn: tokenResponse.data.expires_in};
 
     return token;
@@ -20,5 +22,7 @@ const getTokenApi = async () => {
     return { status: "500", error: "No se pudo obtener el token" };
   }
 };
+
+getTokenApi();
 
 export default getTokenApi;
