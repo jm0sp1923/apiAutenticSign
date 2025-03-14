@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const tokenFilePath = path.join(__dirname, "../constants/tokenAutentic.json");
+const tokenFilePath =  "/tmp/tokenAutentic.json";
 let tokenCache = null; 
 
 async function getValidAutenticToken() {
@@ -41,7 +41,7 @@ async function getValidAutenticToken() {
     };
 
     await fs.writeFile(tokenFilePath, JSON.stringify(newToken, null, 2), "utf-8");
-    console.log("✅ Token guardado correctamente en tokenHubspot.json:", newToken);
+    console.log("✅ Token guardado correctamente en tokenAutentic.json:", newToken);
 
 
     return newToken.token;
