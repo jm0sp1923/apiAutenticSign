@@ -26,6 +26,5 @@ const getTokenApi = async () => {
   }
 };
 
-getTokenApi();
 
 export default getTokenApi;
