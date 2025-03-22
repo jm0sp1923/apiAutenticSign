@@ -9,8 +9,8 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha) => (
           senderIdentification: "1109184891",
           idTemplate: "05dc0ea5",
           filenames: [
-            "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf",
-            "REGLAMENTO_DE_FIANZA_AFFI_8.pdf",
+            "CONTRATO DE FIANZA COLECTIVA CON000493.pdf",
+            "REGLAMENTO_DE_FIANZA_AFFI.pdf",
           ],
           ensambled: {
             "form-field-ba3mg": datos.numero_de_contrato,
@@ -30,7 +30,6 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha) => (
             "form-field-wcgao": datos.nombre_inmobiliaria,
             "form-field-e187r": datos.nit_inmobiliaria,
           },
-  
           "signers":[
             {
               name: datos.nombre_representante_legal,
@@ -45,7 +44,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha) => (
               name: "Lilian Paola",
               lastName: "Holguín Orrego",
               identification: "1112956229",
-              email: "juan.rodriguez@affi.net",
+              email: "jm0sp@yopmail.com",
               phone: "",
               roleTemplate: "comercial",
               authMethods: ["OTP"],
@@ -54,7 +53,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha) => (
               name: "CESAR AUGUSTO",
               lastName: "TEZNA CASTAÑO",
               identification: "94492994",
-              email: "edgar.camacho@affi.net",
+              email: "jm0sp1923@yopmail.com",
               phone: "",
               roleTemplate: "gerencia",
               authMethods: ["OTP"],

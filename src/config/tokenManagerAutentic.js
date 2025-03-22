@@ -1,10 +1,13 @@
 import fs from "fs/promises";
+import path from "path";
 import getTokenApi from "../utils/auth/getTokenAutentic.js";
 
+//const tokenFilePath = path.resolve("src/constants/tokenAutentic.json");
 const tokenFilePath =  "/tmp/tokenAutentic.json";
 let tokenCache = null; 
 
 async function getValidAutenticToken() {
+  
   if (tokenCache && tokenCache.expiresAt > Math.floor(Date.now() / 1000)) {
     console.log("🔄 Reutilizando token de Autentic desde caché");
     return tokenCache.token;

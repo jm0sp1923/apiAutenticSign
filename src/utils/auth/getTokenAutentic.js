@@ -5,9 +5,6 @@ const tokenRequestBody = {audience: process.env.AUDIENCE,grant_type: process.env
 
 const END_POINT_GET_TOKEN_API_AUTNETIC_SIGN = process.env.END_POINT_GET_TOKEN_API_AUTNETIC_SIGN;
 
-console.log("END_POINT_GET_TOKEN_API_AUTNETIC_SIGN", END_POINT_GET_TOKEN_API_AUTNETIC_SIGN);
-console.log("tokenRequestBody", tokenRequestBody);
-
 const getTokenApi = async () => {
   try {
     const tokenResponse = await axios.post(
@@ -25,6 +22,5 @@ const getTokenApi = async () => {
     return { status: "500", error: "No se pudo obtener el token" };
   }
 };
-
 
 export default getTokenApi;

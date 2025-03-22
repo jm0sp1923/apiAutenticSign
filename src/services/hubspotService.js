@@ -1,13 +1,11 @@
 import axios from "axios";
-import fs from "fs";
 import FormData from "form-data";
 import getValidHubspotToken from "../config/tokenManagerHubspot.js";
 
-let id_nota = "74916329899";
 let custom_objet_id = "2-27967747";
 let type_id_vinculacion_notas = "63";
 
-async function adjuntarArchivoService(id_objeto) {
+async function adjuntarArchivoService(id_objeto,id_nota) {
   const token = await getValidHubspotToken();
   let url = `https://api.hubspot.com/crm/v3/objects/notes/${id_nota}/associations/${custom_objet_id}/${id_objeto}/${type_id_vinculacion_notas}`;
 
@@ -45,9 +43,8 @@ async function adjuntarArchivoService(id_objeto) {
   }
 }
 
-async function crearNotaService() {
-  let owner_id = "1384856908";
-  let id_file_uploaded = "187287701058";
+async function crearNotaService(id_file_uploaded) {
+  let owner_id = "664132265";
   let token = await getValidHubspotToken();
   let url = `https://api.hubspot.com/crm/v3/objects/notes`;
 
@@ -56,7 +53,7 @@ async function crearNotaService() {
       hs_timestamp: Math.floor(Date.now() / 1000),
       hubspot_owner_id: owner_id,
       hs_attachment_ids: id_file_uploaded,
-      hs_note_body: "Esta es una nota de prueba y puede ser cualquier cosa",
+      hs_note_body: "Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic",
     },
   };
 
@@ -97,16 +94,11 @@ async function crearNotaService() {
   }
 }
 
-async function crearArchivoService(filePath) {
+async function crearArchivoService({ name, buffer }) {
   const token = await getValidHubspotToken();
 
-  if (!fs.existsSync(filePath)) {
-    console.error("❌ El archivo no existe en la ruta:", filePath);
-    process.exit(1);
-  }
-
   const formData = new FormData();
-  formData.append("file", fs.createReadStream(filePath));
+  formData.append("file", buffer, name);
   formData.append("options", JSON.stringify({ access: "PUBLIC_INDEXABLE" }));
   formData.append("folderPath", "/prueba_archivos_adjuntos");
 
@@ -122,9 +114,6 @@ async function crearArchivoService(filePath) {
       }
     );
 
-    console.log(
-      JSON.stringify({ success: true, data: response.data }, null, 2)
-    );
     return { success: true, data: response.data };
   } catch (error) {
     console.error(
