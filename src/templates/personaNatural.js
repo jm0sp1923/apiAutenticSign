@@ -8,7 +8,7 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha) => ({
         senderIdentification: "1109184891",
         idTemplate: "bd5a6226",
         filenames: [
-          "CONTRATO DE FIANZA COLECTIVA CON000493.pdf",
+          "CONTRATO_DE_FIANZA_COLECTIVA_CON000493.pdf",
           "REGLAMENTO_DE_FIANZA_AFFI_8.pdf" 
       ],
         ensambled: {
