@@ -94,13 +94,22 @@ async function crearNotaService(id_file_uploaded) {
   }
 }
 
-async function crearArchivoService({ name, buffer }) {
+async function crearArchivoService(nombre_inm, num_contrato, { name, buffer }) {
   const token = await getValidHubspotToken();
-
   const formData = new FormData();
-  formData.append("file", buffer, name);
+
+  // Limpiar espacios y quitar la extensión .pdf
+  const nombreLimpio = name.replace(/\s+/g, "_").replace(".pdf", "");
+  const nombreInmuebleLimpio = nombre_inm.replace(/\s+/g, "_");
+
+  // Buscar el prefijo hasta "CON" y reemplazar el número de contrato
+  const nuevoNombre = nombreLimpio.replace(/CON\d+$/, `CON${num_contrato}`) + `_${nombreInmuebleLimpio}.pdf`;
+
+  console.log("Nombre contrato autentic: ", nuevoNombre);
+
+  formData.append("file", buffer, nuevoNombre);
   formData.append("options", JSON.stringify({ access: "PUBLIC_INDEXABLE" }));
-  formData.append("folderPath", "/prueba_archivos_adjuntos");
+  formData.append("folderPath", "/Contratos_Fianzas");
 
   try {
     const response = await axios.post(
@@ -126,5 +135,6 @@ async function crearArchivoService({ name, buffer }) {
     return { success: false, error: error.response?.data || error.message };
   }
 }
+
 
 export { adjuntarArchivoService, crearArchivoService, crearNotaService };

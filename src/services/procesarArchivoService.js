@@ -4,13 +4,13 @@ import {
   crearNotaService,
 } from "./hubspotService.js";
 
-async function procesarArchivoService(id_vinculacion, fileBuffer) {
+async function procesarArchivoService(id_vinculacion,nombre_inm,num_contrato,fileBuffer) {
   const resultados = [];
   const errores = [];
 
   for (const file of fileBuffer) {  
     try {
-      const archivoResponse = await crearArchivoService(file);
+      const archivoResponse = await crearArchivoService(nombre_inm,num_contrato,file);
 
       if (!archivoResponse.success)
         throw new Error("Error al crear el archivo: " + archivoResponse.error);

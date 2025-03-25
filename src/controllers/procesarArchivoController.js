@@ -3,7 +3,7 @@ import getFileService from "../services/fileService.js";
 
 async function procesarArchivoController(req, res) {
   try {
-    const { id_vinculacion, processId } = req.body;
+    const { id_vinculacion,nombre_inm, num_contrato,processId } = req.body;
 
     const fileBuffer = await getFileService(processId);
 
@@ -14,7 +14,7 @@ async function procesarArchivoController(req, res) {
       });
     }
 
-    const { resultados, errores } = await procesarArchivoService(id_vinculacion, fileBuffer);
+    const { resultados, errores } = await procesarArchivoService(id_vinculacion,nombre_inm,num_contrato,fileBuffer);
 
     if (resultados.length === 0) {
       return res.status(500).json({
