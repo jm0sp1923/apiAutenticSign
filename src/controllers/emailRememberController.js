@@ -3,7 +3,7 @@ import rememberMailService from "../services/rememberMailServices.js"
 async function rememberMail(req,res) {
     
     try{
-        const response = rememberMailService(req.data)
+        const response = rememberMailService(req.body)
         res.status(200).json({"mesage": "Correo enviado"})
     }catch{
 

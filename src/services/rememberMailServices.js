@@ -16,7 +16,7 @@ async function getToken() {
   return response.data.access_token;
 }
 
-const html = (num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
+const html = (nombre_destinatario,num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
   <body>
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f2f4f7; padding:40px 20px;">
       <tr>
@@ -24,7 +24,7 @@ const html = (num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
           <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:10px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.1); border:1px solid #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#333;">
             <tr>
               <td>
-                <h2 style="color:#1a202c; margin-bottom:20px;">¡Hola <strong>${nombre_cliente}</strong>!</h2>
+                <h2 style="color:#1a202c; margin-bottom:20px;">¡Hola <strong>${nombre_destinatario}</strong>!</h2>
                 <p style="font-size:16px; line-height:1.6;">
                   Este es un recordatorio de que aún está pendiente la firma del contrato: 
                 </p>
@@ -69,20 +69,15 @@ const html = (num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
   </body>
 `;
 
-async function rememberMail() {
+async function rememberMail(data) {
   try {
+    const {numContrato,nombreCliente,fechaEnvio,processId}  = data
     const token = await getToken();
 
     const sender = "juan.munoz@affi.net";
     const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;
 
-    // Valores dinámicos que tú debes llenar
-    const numContrato = "CON298318932";
-    const nombreCliente = "Juan Munoz";
-    const fechaEnvio = "2025-04-11";
-    const processId = "abcd1234";
-
-    const htmlContent = html(numContrato, nombreCliente, fechaEnvio, processId);
+    const htmlContent = html("  ",numContrato, nombreCliente, fechaEnvio, processId);
 
     const jsonBody = {
       message: {
@@ -121,6 +116,6 @@ async function rememberMail() {
   }
 }
 
-rememberMail();
+//rememberMail();
 
 export default rememberMail;
