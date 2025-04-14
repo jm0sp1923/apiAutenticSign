@@ -1,110 +1,106 @@
 import "dotenv/config";
 import axios from "axios";
 
-const { CLIENT_ID, CLIENT_SECRET, TENANT_ID } = process.env;
+const { CLIENT_ID_AD, CLIENT_SECRET_AD, TENANT_ID_AD } = process.env;
 
 async function getToken() {
-  const tokenUrl = `https://login.microsoftonline.com/${TENANT_ID}/oauth2/v2.0/token`;
+  const tokenUrl = `https://login.microsoftonline.com/${TENANT_ID_AD}/oauth2/v2.0/token`;
 
   const params = new URLSearchParams();
   params.append("grant_type", "client_credentials");
-  params.append("client_id", CLIENT_ID);
-  params.append("client_secret", CLIENT_SECRET);
+  params.append("client_id", CLIENT_ID_AD);
+  params.append("client_secret", CLIENT_SECRET_AD);
   params.append("scope", "https://graph.microsoft.com/.default");
 
   const response = await axios.post(tokenUrl, params);
   return response.data.access_token;
 }
 
-// HTML como string
-let html = `
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Recordatorio de Firma</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      padding: 20px;
-      color: #333;
-    }
-    .container {
-      background-color: #fff;
-      border-radius: 8px;
-      padding: 30px;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h2 {
-      color: #2c3e50;
-    }
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-    }
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 24px;
-      background-color: #0078D4;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .footer {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #999;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>¡Hola!</h2>
-    <p>
-      Este es un recordatorio amable de que aún tienes pendiente la firma de un contrato.
-    </p>
-    <p>
-      Por favor, revisa tus documentos y completa la firma lo antes posible.
-    </p>
-    <a href="#" class="button">Firmar ahora</a>
-    <p class="footer">
-      Si ya firmaste este contrato, puedes ignorar este mensaje.
-    </p>
-  </div>
-</body>
-</html>
-`;
+const html = (num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
+  <body>
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f2f4f7; padding:40px 20px;">
+      <tr>
+        <td align="center">
+          <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:10px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.1); border:1px solid #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:#333;">
+            <tr>
+              <td>
+                <h2 style="color:#1a202c; margin-bottom:20px;">¡Hola <strong>${nombre_cliente}</strong>!</h2>
+                <p style="font-size:16px; line-height:1.6;">
+                  Este es un recordatorio de que aún está pendiente la firma del contrato: 
+                </p>
 
-let jsonBody = {
-  message: {
-    subject: "Recordatorio de Firma",
-    body: {
-      contentType: "HTML",
-      content: html,
-    },
-    toRecipients: [
-      {
-        emailAddress: {
-          address: "jm0sp@yopmail.com",
-        },
-      },
-    ],
-  },
-  saveToSentItems: false,
-};
+                <div style="background-color:#f9fafb; border-left:4px solid #2b2d77; padding:15px 20px; margin-top:20px; border-radius:6px; font-size:15px;">
+                  <p><strong>📄 Número de contrato:</strong> ${num_contrato}</p>
+                  <p><strong>🏣 Nombre cliente:</strong> ${nombre_cliente}</p>
+                  <p><strong>📅 Fecha de envío:</strong> ${fecha_envio_correo}</p>
+                  <p><strong>🔁 Process ID:</strong> ${process_id}</p>
+                </div>
+
+                <p style="font-size:16px; line-height:1.6; margin-top:20px;">
+                Por favor revisa tu bandeja de entrada en la fecha de envío para ver el correo con el enlace para firmar.
+                </p>
+                <pstyle="font-size:12px; line-height:1.6; margin-top:20px;">
+                  <strong>Nota</strong>: Puedes buscar el correo con el enlace de firma que contiene el ID de proceso <strong>${process_id}</strong>. Si ya completaste la firma, puedes ignorar este mensaje.
+                </p>
+
+                <p style="margin-top:30px; font-size:13px; color:#888; text-align:center;">
+                  Gracias por tu atención.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top:20px;">
+                <hr style="border:none; border-top:1px solid #e0e0e0;" />
+                <p style="font-size:13px; color:#999; text-align:center; margin-top:20px;">
+                  Siempre Moviéndonos Hacia Adelante
+                </p>
+                <p style="font-size:12px; text-align:center;">
+                  <a href="#" style="margin: 0 10px; text-decoration:none; color:#4a90e2;">Facebook</a> |
+                  <a href="#" style="margin: 0 10px; text-decoration:none; color:#4a90e2;">LinkedIn</a> |
+                  <a href="#" style="margin: 0 10px; text-decoration:none; color:#4a90e2;">X</a> |
+                  <a href="#" style="margin: 0 10px; text-decoration:none; color:#4a90e2;">Instagram</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+`;
 
 async function rememberMail() {
   try {
     const token = await getToken();
 
-    const sender = "juan.munoz@affi.net"; 
+    const sender = "juan.munoz@affi.net";
     const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;
+
+    // Valores dinámicos que tú debes llenar
+    const numContrato = "CON298318932";
+    const nombreCliente = "Juan Munoz";
+    const fechaEnvio = "2025-04-11";
+    const processId = "abcd1234";
+
+    const htmlContent = html(numContrato, nombreCliente, fechaEnvio, processId);
+
+    const jsonBody = {
+      message: {
+        subject: "Recordatorio de Firma",
+        body: {
+          contentType: "HTML",
+          content: htmlContent,
+        },
+        toRecipients: [
+          {
+            emailAddress: {
+              address: "jm0sp1923@gmail.com" ,
+            },
+          },
+        ],
+      },
+      saveToSentItems: false,
+    };
 
     const res = await axios.post(urlMailSend, jsonBody, {
       headers: {
@@ -126,3 +122,5 @@ async function rememberMail() {
 }
 
 rememberMail();
+
+export default rememberMail;

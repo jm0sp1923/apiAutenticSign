@@ -1,6 +1,6 @@
 import express from "express";
 import {procesarArchivoController} from "../controllers/procesarArchivoController.js";
-import {rememberMail} from "../controllers/procesarArchivoController.js"
+import {rememberMail} from "../controllers/emailRememberController.js"
 import {validarProcessID} from "../middlewares/validarFile.js";
 const router = express.Router();
 
