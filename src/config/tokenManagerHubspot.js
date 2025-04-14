@@ -3,8 +3,8 @@ import path from "path";
 import refreshAccessToken from "../utils/auth/getTokenHubspot.js";
 
 
-//const tokenFilePath = path.resolve("src/constants/tokenHubspot.json");
-const tokenFilePath =  "/tmp/tokenHubspot.json";
+const tokenFilePath = path.resolve("src/constants/tokenHubspot.json");
+//const tokenFilePath =  "/tmp/tokenHubspot.json";
 let tokenCache = null; 
 
 async function getValidHubspotToken() {
