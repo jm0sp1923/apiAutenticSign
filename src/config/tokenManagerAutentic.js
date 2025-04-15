@@ -2,8 +2,8 @@ import fs from "fs/promises";
 import path from "path";
 import getTokenApi from "../utils/auth/getTokenAutentic.js";
 
-const tokenFilePath = path.resolve("src/constants/tokenAutentic.json");
-//const tokenFilePath =  "/tmp/tokenAutentic.json";
+//const tokenFilePath = path.resolve("src/constants/tokenAutentic.json");
+const tokenFilePath =  "/tmp/tokenAutentic.json";
 let tokenCache = null; 
 
 async function getValidAutenticToken() {

@@ -11,6 +11,7 @@ app.use(cors());
 // Rutas
 app.use("/api",routes);
 
+
 app.get("/", (req, res) => {
   res.status(200).send("Hello world");
 });

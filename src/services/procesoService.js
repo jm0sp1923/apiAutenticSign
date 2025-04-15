@@ -33,7 +33,7 @@ async function asignarProcesoService(tipo_persona, datos) {
     }
 
     //console.log("jsonBody", JSON.stringify(jsonBody, null, 2));
-
+    
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,

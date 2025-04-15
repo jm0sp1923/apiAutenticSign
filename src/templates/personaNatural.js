@@ -39,7 +39,7 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha) => ({
             name: "Lilian Paola",
             lastName: "Holguín Orrego",
             identification: "1112956229",
-            email: ["jm0sp@yopmail.com", "juan.munoz@affi.net"],
+            email: "jm0sp@yopmail.com",
             phone: "",
             roleTemplate: "comercial",
             authMethods: ["OTP"],
