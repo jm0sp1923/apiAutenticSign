@@ -8,7 +8,7 @@ router.post("/procesarArchivo",validarProcessID, procesarArchivoController);
 router.post("/emailRemender", rememberMail)
 router.post("/obtenerDatosEmail",(req,res) =>{
     console.log(console.log(req.body))
-    res.status(200).send("ok")
+    res.status(200).send(req.body)
 })
 
 export default router;
