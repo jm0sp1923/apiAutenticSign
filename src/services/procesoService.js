@@ -8,19 +8,26 @@ import "dotenv/config";
 
 
 async function asignarProcesoService(tipo_persona, datos) {
+  
+  //Obtener Token de Autenticación Para el API de Autentic
   const token = await getValidToken();
+  
   try {
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
     }
 
+    //Funcion para obtener la fecha en el formato requerido para la generarcion del contrato
     const fecha = obtenerFormatoFecha();
+    
+    //Funcion para obtener la tarifa dependiendo de la ciudad requerido para la generarcion del contrato
     const tarifa_segun_zona = tarifaSegunZona(datos.ciudad_inmobiliaria) + "%";
 
     const END_POINT_CARGAR_PROCESO_API_AUTENTIC = process.env.END_POINT_API_AUTNETIC_SIGN;
 
     let jsonBody;
 
+    //Seleccionar el template dependiendo del tipo de persona
     switch (tipo_persona) {
       case "Jurídica":
         jsonBody = personaJuridicaTemplate(datos, tarifa_segun_zona, fecha);
@@ -52,7 +59,11 @@ async function asignarProcesoService(tipo_persona, datos) {
   }
 }
 
+
+//Funcion para consultar el estado del proceso
 async function consultarEstadoProcesoService(massiveProcessingId) {
+  
+  //Obtener Token de Autenticación Para el API de Autentic
   const token = await getValidToken();
   try {
     if (!token || typeof token !== "string") {
@@ -72,9 +83,12 @@ async function consultarEstadoProcesoService(massiveProcessingId) {
 
     //console.log("processResponse", JSON.stringify(processResponse.data, null, 2));
 
+
     const processEstatus = processResponse.data.body?.processes?.[0]?.status;
     const processId = processResponse.data.body.processes?.[0].processId;
 
+  //retorna el estado del proceso [SIGNED || WAITING_FOR_SIGNATURES] y el id del proceso
+  
     return { processEstatus, processId };
   } catch (error) {
     console.error("Error al consultar el proceso:", error.message);
