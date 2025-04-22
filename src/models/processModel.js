@@ -12,7 +12,7 @@ const processSchema = new mongoose.Schema({
       required: true
     },
     fecha: {
-      type: Date,
+      type: String,
       default: Date.now
     }
   });

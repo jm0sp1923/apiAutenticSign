@@ -7,12 +7,9 @@ import Gerencias from "../models/gerenciasModel.js";
 
 async function rememberMail(data) {
   try {
-    console.log("Tipo de data:", typeof data);
-    console.log("Contenido data:", data);
-
-    const { numContrato, nombreCliente, fechaEnvio, processId } = data;
+    
+    const { numContrato, nombreCliente, processId } = data;
     const token = await getToken();
-    console.log("Id proceso:", processId);
     const proceso = await Procesos.findOne({ processId: processId });
 
     if (!proceso) {
@@ -45,7 +42,7 @@ async function rememberMail(data) {
       nameDestinatario,
       numContrato,
       nombreCliente,
-      fechaEnvio,
+      proceso.fecha,
       processId
     );
 
