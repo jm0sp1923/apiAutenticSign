@@ -9,7 +9,6 @@ async function rememberMail(req,res) {
 
         res.status("400").json({"mesage": "Correo no enviado"})
     }
-    
 
 }
 

@@ -45,8 +45,8 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha) => ({
             authMethods: ["OTP"],
           },
           {
-            name: "CESAR AUGUSTO",
-            lastName: "TEZNA CASTAÑO",
+            name: "Cesar Augusto",
+            lastName: "Tezna Castaño",
             identification: "94492994",
             email: "jm0sp1923@yopmail.com",
             phone: "",
