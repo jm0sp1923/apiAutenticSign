@@ -3,6 +3,7 @@ import getDatosEmailRemember from "../utils/getDatosEmailRemember.js";
 
 async function obtenerDatosEmailController(req, res) {
   try {
+    console.log("Datos del email:", req.body);
     const processEmail = getDatosEmailRemember(req.body);
 
     console.log(processEmail);

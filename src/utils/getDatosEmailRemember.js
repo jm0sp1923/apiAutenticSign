@@ -1,29 +1,23 @@
-export default function getDatosEmailRemember(data) {
-    try {
-      const bodyText = data.body.body;
-  
-      // Extraer el firmante del <label>
-      const matchName = bodyText.match(/<label[^>]*>(.*?)<\/label>/);
-      const firmante = matchName ? matchName[1].trim() : null;
-  
-      // Extraer el ID del proceso desde el link
-      const matchProceso = bodyText.match(/view-documents-signed\/([a-z0-9]+)\//i);
-      const processId = matchProceso ? matchProceso[1] : null;
-  
-      // Fecha del email
-      const fecha = data.body.receivedDateTime || new Date().toISOString();
-  
-      if (!firmante || !processId || !fecha) {
-        throw new Error("Datos incompletos");
-      }
-  
-      return {
-        processId,
-        firmante,
-        fecha
-      };
-    } catch (error) {
-      throw new Error("Error al procesar el cuerpo del email");
+export default function getDatosEmailRemember(bodyText, fechaEmail = null) {
+  try {
+    const matchName = bodyText.match(/<label[^>]*>([^<]+)<\/label>/i);
+    const firmante = matchName ? matchName[1].trim() : null;
+
+    const matchProceso = bodyText.match(/view-documents-signed\/([a-z0-9-]+)\//i);
+    const processId = matchProceso ? matchProceso[1] : null;
+
+    const fecha = fechaEmail || new Date().toISOString();
+
+    if (!firmante || !processId) {
+      throw new Error("Datos incompletos: firmante o ID de proceso no encontrado");
     }
+
+    return {
+      processId,
+      firmante,
+      fecha
+    };
+  } catch (error) {
+    throw new Error(`Error al procesar el cuerpo del email: ${error.message}`);
   }
-  
+}
