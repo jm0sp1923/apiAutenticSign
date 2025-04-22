@@ -20,7 +20,7 @@ async function obtenerDatosEmailController(req, res) {
 
   } catch (error) {
     console.error(error.message);
-    res.status(400).json({ message: "Datos del proceso mal formados" });
+    res.status(400).json({ message: "Datos del proceso mal formados", error: error.message });
   }
 }
 
