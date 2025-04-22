@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post("/procesarArchivo",validarProcessID, procesarArchivoController);
 router.post("/emailRemender", rememberMail)
-router.post("/obtenerDatosEmail",obtenerDatosEmail)
+router.post("/obtenerDatosEmail",express.text({ type: '*/*' }),obtenerDatosEmail)
 
 export default router;

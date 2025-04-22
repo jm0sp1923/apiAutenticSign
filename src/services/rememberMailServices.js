@@ -2,16 +2,18 @@ import "dotenv/config";
 import axios from "axios";
 import getToken from "../config/tokenTenant.js";
 import emailRemember from "../templates/templateEmailRemember.js";
-import Process from "../models/processModel.js";
+import Procesos from "../models/processModel.js";
 import Gerencias from "../models/gerenciasModel.js";
 
 async function rememberMail(data) {
   try {
+    console.log("Tipo de data:", typeof data);
+    console.log("Contenido data:", data);
+
     const { numContrato, nombreCliente, fechaEnvio, processId } = data;
     const token = await getToken();
-    const proceso = await Process.findOne({ processId });
-
-    console.log("Process base de datos", proceso);
+    console.log("Id proceso:", processId);
+    const proceso = await Procesos.findOne({ processId: processId });
 
     if (!proceso) {
       console.error("Proceso no encontrado");

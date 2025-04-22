@@ -5,7 +5,8 @@ import routes from "./routes/index.js";
 const app = express();
 
 // Middlewares
-app.use(express.text({ type: '*/*' })); // Esto primero para rutas como obtenerDatosEmail
+
+
 app.use(express.json()); // Esto después para rutas JSON
 app.use(cors());
 
