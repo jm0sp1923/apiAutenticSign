@@ -1,19 +1,28 @@
 import "dotenv/config";
 import axios from "axios";
 import getToken from "../config/tokenTenant.js";
-import emailRemember from "../templates/templateEmailRemember.js"
+import emailRemember from "../templates/templateEmailRemember.js";
+import Process from "../models/processModel.js";
 
 
 async function rememberMail(data) {
   try {
     const {numContrato,nombreCliente,fechaEnvio,processId}  = data
     const token = await getToken();
+    const proceso = await Process.findOne({processId});
+
+    console.log("Process base de datos", proceso );
+
+    if (!proceso) {
+      console.error("Proceso no encontrado");
+      return;
+    }
 
     const sender = "juan.munoz@affi.net";
     const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;
 
   
-    const htmlContent = emailRemember("  ",numContrato, nombreCliente, fechaEnvio, processId);
+    const htmlContent = emailRemember(proceso.firmante,numContrato, nombreCliente, fechaEnvio, processId);
 
     const jsonBody = {
       message: {

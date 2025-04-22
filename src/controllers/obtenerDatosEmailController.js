@@ -1,14 +1,27 @@
+import Process from "../models/processModel.js";
+import getDatosEmailRemember from "../utils/getDatosEmailRemember.js";
 
-async function obtenerDatosEmail(req,res) {
-    
-    try{
-        res.status(200).json({"cuerpo": req.body})
-    }catch{
+async function obtenerDatosEmailController(req, res) {
+  try {
+    const processEmail = getDatosEmailRemember(req.body);
 
-        res.status("400").json({"mesage": "Correo no enviado"})
-    }
-    
+    console.log(processEmail);
 
+    await Process.findOneAndUpdate(
+      { processId: processEmail.processId },
+      {
+        firmante: processEmail.firmante,
+        fecha: processEmail.fecha
+      },
+      { upsert: true, new: true }
+    );
+
+    res.status(200).json({ message: "Datos del proceso guardados correctamente" });
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ message: "Datos del proceso mal formados" });
+  }
 }
 
-export {obtenerDatosEmail}
+export default obtenerDatosEmailController;

@@ -26,10 +26,5 @@ app.use((req, res) => {
   res.status(404).json({ error: "Ruta no encontrada" });
 });
 
-// Middleware para manejar errores
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: "Ocurrió un error interno en el servidor" });
-});
 
 export default app; // Exportamos sin iniciar el servidor
