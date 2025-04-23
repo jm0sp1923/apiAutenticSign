@@ -6,6 +6,7 @@ import Procesos from "../models/processModel.js";
 import Gerencias from "../models/gerenciasModel.js";
 
 async function rememberMail(data) {
+  
   try {
     
     const { numContrato, nombreCliente, processId } = data;
@@ -13,8 +14,7 @@ async function rememberMail(data) {
     const proceso = await Procesos.findOne({ processId: processId });
 
     if (!proceso) {
-      console.error("Proceso no encontrado");
-      return;
+      throw new Error("Proceso no encontrado");
     }
 
     let emailDestino = "";

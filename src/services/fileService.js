@@ -22,7 +22,7 @@ async function getFileService(processId) {
     return Array.isArray(fileBuffer) ? fileBuffer : []; 
   } catch (error) {
     console.error("❌ Error en getFileService:", error.message);
-    return []; // ⬅️ Retornar un array vacío en caso de error
+    return []; // Retornar un array vacío en caso de error
   }
 }
 

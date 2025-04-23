@@ -87,7 +87,7 @@ async function consultarEstadoProcesoService(massiveProcessingId) {
     const processEstatus = processResponse.data.body?.processes?.[0]?.status;
     const processId = processResponse.data.body.processes?.[0].processId;
 
-  //retorna el estado del proceso [SIGNED || WAITING_FOR_SIGNATURES] y el id del proceso
+//retorna el estado del proceso [ UNSIGNED ||SIGNED || WAITING_FOR_SIGNATURES ] y el id del proceso
   
     return { processEstatus, processId };
   } catch (error) {

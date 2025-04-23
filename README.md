@@ -1,4 +1,3 @@
-
 # 📄 Integración de HubSpot con AutenticSign
 
 Esta integración permite generar contratos automáticamente para las vinculaciones en HubSpot utilizando **Workflows** (Webhooks) y la API **Carga Masiva de Autentic** para cargar los procesos.
@@ -102,10 +101,10 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 
 #### 🧾 Descripción de Campos
 
-| Nombre         | Tipo   | Descripción                                                                                                                |
-| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------- |
-| ProcessEstatus | String | Estado actual del proceso:<br />`UNSIGNED`: No ha sido firmado : En espera de firmas <br />`SIGNED`: Proceso finalizado |
-| ProcessId      | String | ID del proceso en Autentic                                                                                                  |
+| Nombre         | Tipo   | Descripción                                                                                                                                                |
+| -------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ProcessEstatus | String | Estado actual del proceso:<br />`UNSIGNED`: No ha sido firmado <br />`WAITING_FOR_SIGNATURES`: En espera de firmas <br />`SIGNED`: Proceso finalizado |
+| ProcessId      | String | ID del proceso en Autentic                                                                                                                                  |
 
 ---
 
@@ -148,9 +147,193 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 
 ---
 
+### 4. Adjuntar Archivos Al Ticket de vinculacion
+
+**Endpoint:** `POST /api/hubspot/procesarArchivo`
+
+#### 📌 Ejemplo de Entrada
+
+```json
+{
+    "id_vinculacion": 25622756487,
+    "nombre_inm": "AFFI PRUEBA",
+    "num_contrato": "1239192312",
+    "processId": "3e996f9d"
+}
+```
+
+#### 📌 Ejemplo de Respuesta
+
+```json
+{
+    "success": true,
+    "message": "Proceso completado con algunos errores.",
+    "data": [
+        {
+            "archivo": {
+                "id": "189250453341",
+                "createdAt": "2025-04-23T16:06:08.723Z",
+                "updatedAt": "2025-04-23T16:06:08.723Z",
+                "parentFolderId": "187864382023",
+                "name": "REGLAMENTO_DE_FIANZA_AFFI_8_AFFI_PRUEBA-3",
+                "path": "/Contratos_Fianzas/REGLAMENTO_DE_FIANZA_AFFI_8_AFFI_PRUEBA-3.pdf",
+                "size": 260367,
+                "type": "DOCUMENT",
+                "extension": "pdf",
+                "defaultHostingUrl": "https://43918798.fs1.hubspotusercontent-na1.net/hubfs/43918798/Contratos_Fianzas/REGLAMENTO_DE_FIANZA_AFFI_8_AFFI_PRUEBA-3.pdf",
+                "url": "https://43918798.fs1.hubspotusercontent-na1.net/hubfs/43918798/Contratos_Fianzas/REGLAMENTO_DE_FIANZA_AFFI_8_AFFI_PRUEBA-3.pdf",
+                "isUsableInContent": true,
+                "access": "PUBLIC_INDEXABLE",
+                "fileMd5": "a47c8df679b36cae3d406d5de39941a6",
+                "sourceGroup": "CONTENT",
+                "archived": false
+            },
+            "nota": {
+                "id": "77679030178",
+                "properties": {
+                    "hs_all_accessible_team_ids": "41432309;44993262",
+                    "hs_all_owner_ids": "664132265",
+                    "hs_all_team_ids": "41432309",
+                    "hs_attachment_ids": "189250453341",
+                    "hs_body_preview": "Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic",
+                    "hs_body_preview_html": "<html>\n <head></head>\n <body>\n Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic\n </body>\n</html>",
+                    "hs_body_preview_is_truncated": "false",
+                    "hs_createdate": "2025-04-23T16:06:09.001Z",
+                    "hs_lastmodifieddate": "2025-04-23T16:06:09.001Z",
+                    "hs_note_body": "Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic",
+                    "hs_object_coordinates": "0-46-77679030178",
+                    "hs_object_id": "77679030178",
+                    "hs_object_source": "INTEGRATION",
+                    "hs_object_source_id": "8903263",
+                    "hs_object_source_label": "INTEGRATION",
+                    "hs_timestamp": "1970-01-21T04:50:24.368Z",
+                    "hs_user_ids_of_all_owners": "62701319",
+                    "hubspot_owner_assigneddate": "2025-04-23T16:06:09.001Z",
+                    "hubspot_owner_id": "664132265",
+                    "hubspot_team_id": "41432309"
+                },
+                "createdAt": "2025-04-23T16:06:09.001Z",
+                "updatedAt": "2025-04-23T16:06:09.001Z",
+                "archived": false
+            },
+            "vinculacion": {
+                "id": "77679030178",
+                "properties": {
+                    "hs_createdate": "2025-04-23T16:06:09.001Z",
+                    "hs_lastmodifieddate": "2025-04-23T16:06:09.001Z",
+                    "hs_object_id": "77679030178"
+                },
+                "createdAt": "2025-04-23T16:06:09.001Z",
+                "updatedAt": "2025-04-23T16:06:09.001Z",
+                "archived": false,
+                "associations": {
+                    "p43918798_vinculaciones": {
+                        "results": [
+                            {
+                                "id": "26655435018",
+                                "type": "vinculaciones_to_note"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "archivo": {
+                "id": "189250453343",
+                "createdAt": "2025-04-23T16:06:09.595Z",
+                "updatedAt": "2025-04-23T16:06:09.595Z",
+                "parentFolderId": "187864382023",
+                "name": "CONTRATO_DE_FIANZA_COLECTIVA_CON1239192312_AFFI_PRUEBA-2",
+                "path": "/Contratos_Fianzas/CONTRATO_DE_FIANZA_COLECTIVA_CON1239192312_AFFI_PRUEBA-2.pdf",
+                "size": 353976,
+                "type": "DOCUMENT",
+                "extension": "pdf",
+                "defaultHostingUrl": "https://43918798.fs1.hubspotusercontent-na1.net/hubfs/43918798/Contratos_Fianzas/CONTRATO_DE_FIANZA_COLECTIVA_CON1239192312_AFFI_PRUEBA-2.pdf",
+                "url": "https://43918798.fs1.hubspotusercontent-na1.net/hubfs/43918798/Contratos_Fianzas/CONTRATO_DE_FIANZA_COLECTIVA_CON1239192312_AFFI_PRUEBA-2.pdf",
+                "isUsableInContent": true,
+                "access": "PUBLIC_INDEXABLE",
+                "fileMd5": "2312d822408ddd11e73af58ec4c380f6",
+                "sourceGroup": "CONTENT",
+                "archived": false
+            },
+            "nota": {
+                "id": "77677471373",
+                "properties": {
+                    "hs_all_accessible_team_ids": "41432309;44993262",
+                    "hs_all_owner_ids": "664132265",
+                    "hs_all_team_ids": "41432309",
+                    "hs_attachment_ids": "189250453343",
+                    "hs_body_preview": "Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic",
+                    "hs_body_preview_html": "<html>\n <head></head>\n <body>\n Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic\n </body>\n</html>",
+                    "hs_body_preview_is_truncated": "false",
+                    "hs_createdate": "2025-04-23T16:06:09.865Z",
+                    "hs_lastmodifieddate": "2025-04-23T16:06:09.865Z",
+                    "hs_note_body": "Esta nota es creada atravez de la api de hubspot para adjuntar el contrato de autentic",
+                    "hs_object_coordinates": "0-46-77677471373",
+                    "hs_object_id": "77677471373",
+                    "hs_object_source": "INTEGRATION",
+                    "hs_object_source_id": "8903263",
+                    "hs_object_source_label": "INTEGRATION",
+                    "hs_timestamp": "1970-01-21T04:50:24.369Z",
+                    "hs_user_ids_of_all_owners": "62701319",
+                    "hubspot_owner_assigneddate": "2025-04-23T16:06:09.865Z",
+                    "hubspot_owner_id": "664132265",
+                    "hubspot_team_id": "41432309"
+                },
+                "createdAt": "2025-04-23T16:06:09.865Z",
+                "updatedAt": "2025-04-23T16:06:09.865Z",
+                "archived": false
+            },
+            "vinculacion": {
+                "id": "77677471373",
+                "properties": {
+                    "hs_createdate": "2025-04-23T16:06:09.865Z",
+                    "hs_lastmodifieddate": "2025-04-23T16:06:09.865Z",
+                    "hs_object_id": "77677471373"
+                },
+                "createdAt": "2025-04-23T16:06:09.865Z",
+                "updatedAt": "2025-04-23T16:06:09.865Z",
+                "archived": false,
+                "associations": {
+                    "p43918798_vinculaciones": {
+                        "results": [
+                            {
+                                "id": "26655435018",
+                                "type": "vinculaciones_to_note"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
+```
+
+> Los archivos retornados son objetos `Buffer`, puedes usarlos para cargarlos en HubSpot o permitir su descarga.
+
 ## 🧩 Flujo de Uso Recomendado
 
 1. Llamar a `POST /api/procesos/asignarProceso` con los datos del contrato.
 2. Guardar el `massiveProcessingId` recibido.
 3. Consultar el estado del proceso con `POST /api/procesos/consultarEstadoProceso`.
-4. Obtener los archivos relacionados usando `POST /api/archivos/consultarArchivo`.
+4. Adjuntar los archivos relacionados al ticket de vinculacion usando `POST  /api/hubspot/procesarArchivo`.
+
+---
+
+#### 5. Enviar recordatorios
+
+**Endpoint:** `POST /api/hubspot/emailRemender`
+
+Con este endpoint puede mandar recordatorios a los firmantes pendientes del proceso, en este caso a la gerencia comercial y gerencia general.
+
+#### 📌 Ejemplo de Entrada
+
+```json
+{
+  "numContrato": "CON12903091", 
+  "nombreCliente": "SPA GRUPO INMOBILIARIO", 
+  "processId": "c2a67f47"
+}
+```

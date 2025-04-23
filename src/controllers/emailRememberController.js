@@ -2,14 +2,16 @@ import rememberMailService from "../services/rememberMailServices.js"
 
 async function rememberMail(req,res) {
     
-    try{
-        
-        const response = await rememberMailService(req.body);
-        res.status(200).json({"mesage": "Correo enviado"})
-    }catch{
-
-        res.status("400").json({"mesage": "Correo no enviado"})
-    }
+    try {
+        await rememberMailService(req.body);
+        res.status(200).json({ message: "Correo enviado" });
+      } catch (error) {
+        if (error.message === "Proceso no encontrado") {
+          return res.status(404).json({ message: "Proceso no encontrado" });
+        }
+    
+        res.status(400).json({ message: "Correo no enviado" });
+      }
 
 }
 
