@@ -80,9 +80,10 @@ async function rememberMail(data) {
     } else {
       console.log(error.message);
     }
+
+    throw error;
   }
 }
 
-//rememberMail();
 
 export default rememberMail;
