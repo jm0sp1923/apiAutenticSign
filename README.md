@@ -1,28 +1,29 @@
-# Integración de HubSpot con Autentic
 
-## Descripción
+# 📄 Integración de HubSpot con AutenticSign
 
-Esta integración permite la carga de procesos en Autentic a través de un JSON-Template mediante el endpoint `/cargarProceso`. Se pueden enviar notificaciones al completar las firmas y especificar la información requerida para los firmantes y documentos.
+Esta integración permite generar contratos automáticamente para las vinculaciones en HubSpot utilizando **Workflows** (Webhooks) y la API **Carga Masiva de Autentic** para cargar los procesos.
 
 ---
 
-## Flujo de Trabajo
+## 🧭 Flujo de Trabajo
 
-### Endpoint: `POST /api/procesos/asignarProceso`
+### 1. 📥 Crear proceso
 
-Permite cargar un proceso en Autentic enviando un JSON con la estructura requerida.
+**Endpoint:** `POST /api/procesos/asignarProceso`
+Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autentic, enviando un JSON con la estructura requerida.
 
-Ejemplo de JSON De Entrada
+---
+
+### 📌 Ejemplo JSON - Contrato Persona Natural
 
 ```json
-
 {
   "tipo_persona":"Natural",
-  "numero_de_contrato": "1923423",
+  "numero_de_contrato": "CON1923423",
   "nombre_persona_natural": "Edgar David Camacho Garcia",
   "ciudad_inmobiliaria": "Bogota",
   "cedula": "1109184892",
-  "fecha": "Diez y nueve (19) AGOSTO de 2024",
+  "fecha": "Diecinueve (19) de agosto de 2024",
   "nombre_representante_legal": "Juan Sebastian Munoz Perez",
   "cedula_representante_legal": "1109184896",
   "nombre_establecimiento_comercio": "AFFI SAS PRUEBA",
@@ -31,78 +32,127 @@ Ejemplo de JSON De Entrada
 }
 ```
 
-### Ejemplo de JSON de Entrada
+### 📌 Ejemplo JSON - Contrato Persona Jurídica
 
 ```json
 {
-  "sendCompletionNotification": true,
-  "emailForNotification": "ejemplo.prueba@affi.net",
-  "processesTemplate": [
-    {
-      "enterpriseId": "1109184891",
-      "senderEmail": "ejemplo.prueba@affi.net",
-      "senderIdentification": "1101010101",
-      "idTemplate": "05dc0ea5",
-      "filenames": [
-        "MODELO_CONTRATO_FIANZA_COLECTIVA_PERSONA_JURIDICA.pdf",
-        "REGLAMENTO_DE_FIANZA_AFFI_8.pdf"
-      ],
-      "ensambled": {
-        "form-field-ba3mg": "numero_de_contrato",
-        "form-field-w7gaf": "inmobiliaria,"
-      },
-      "signers": [
-        {
-          "name": "prueba",
-          "lastName": "prueba",
-          "identification": "0101010101",
-          "email": "correo",
-          "phone": "celular",
-          "roleTemplate": "cliente",
-          "authMethods": ["OTP"]
-        }
-      ]
-    }
-  ]
+  "tipo_persona":"Jurídica",
+  "numero_de_contrato":"CON109129",
+  "nombre_inmobiliaria":"AFFI SAS PRUEBA",
+  "ciudad_inmobiliaria": "Bogotá D.C.",
+  "nit_inmobiliaria": "9212310123",
+  "nombre_representante_legal": "Juan Sebastian Munoz Perez",
+  "cedula_representante_legal": "1109184891",
+  "ciudad_expedicion": "Bogotá D.C.",
+  "numero_celular":"3104056601",
+  "correo": "jm0sp1923@gmail.com"
 }
 ```
 
 ---
 
-## Descripción de los Campos
+## 🧾 Descripción de Campos
 
-- **sendCompletionNotification** _(booleano)_ : Indica si se debe enviar una notificación cuando se completen las firmas.
-- **emailForNotification** _(string)_ : Email al que se enviará la notificación de finalización del proceso.
-- **processesTemplate** _(array)_ : Lista de procesos a enviar.
-  - **enterpriseId** _(string)_ : ID de la empresa asociada a Autentic.
-  - **senderEmail** _(string)_ : Email del remitente del proceso.
-  - **senderIdentification** _(string)_ : Identificación del remitente del proceso.
-  - **idTemplate** _(string)_ : ID de la plantilla creada en Autentic.
-  - **filenames** _(array de strings)_ : Nombres de los documentos utilizados en la plantilla (deben coincidir con los nombres en Autentic).
-  - **ensambled** _(objeto)_ : Campos a llenar en la plantilla.
-  - **signers** _(array de objetos)_ : Lista de firmantes del documento.
-    - **name** _(string)_ : Nombre del firmante.
-    - **lastName** _(string)_ : Apellido del firmante.
-    - **identification** _(string)_ : Identificación del firmante.
-    - **email** _(string)_ : Correo electrónico del firmante.
-    - **phone** _(string)_ : Teléfono del firmante.
-    - **roleTemplate** _(string)_ : Rol del firmante en la plantilla.
-    - **authMethods** _(array de strings)_ : Métodos de autenticación permitidos (por ejemplo, "OTP").
+| Nombre                     | Tipo   | Descripción                                                                                   |
+| -------------------------- | ------ | ---------------------------------------------------------------------------------------------- |
+| tipo_persona               | String | Tipo de persona (**Natural** o **Jurídica**) para la cual se genera el documento. |
+| numero_de_contrato         | String | Número de contrato                                                                            |
+| nombre_persona_natural     | String | Nombre completo de la persona natural (solo aplica para tipo "Natural")                        |
+| ciudad_inmobiliaria        | String | Ciudad de la inmobiliaria                                                                      |
+| cedula                     | String | Cédula de la persona natural (solo aplica para tipo "Natural")                                |
+| nombre_inmobiliaria        | String | Razón social de la inmobiliaria (solo aplica para tipo "Jurídica")                           |
+| nit_inmobiliaria           | String | NIT de la inmobiliaria (solo aplica para tipo "Jurídica")                                     |
+| nombre_representante_legal | String | Nombre del representante legal                                                                 |
+| cedula_representante_legal | String | Cédula del representante legal                                                                |
+| ciudad_expedicion          | String | Ciudad de expedición de la cédula (solo aplica para tipo "Jurídica")                        |
+| numero_celular             | String | Número de celular (**+57 opcional**; el sistema lo limpia automáticamente)             |
+| correo                     | String | Correo al cual llegará el enlace del proceso para firma                                       |
+| fecha                      | String | Fecha del contrato (solo aplica para tipo "Natural")                                           |
 
 ---
 
-## Consideraciones
+### ✅ Ejemplo de Respuesta Correcta
 
-- Los documentos en `filenames` deben tener los mismos nombres que los documentos cargados en Autentic.
-- Los `form-field-*` en `ensambled` deben coincidir con los campos de la plantilla.
-- Es posible agregar múltiples firmantes en el array `signers`.
+```json
+{
+  "massiveProcessingId": "0121c7d9-f0c3-4db8-9f24-ae1e5afbae6a-20250423085935"
+}
+```
 
 ---
 
-## Autores
+### 2. 🔍 Consultar Estado del Proceso
 
-- Juan Sebastian Munoz Perez - AFFI S.A.S
+**Endpoint:** `POST /api/procesos/consultarEstadoProceso`
 
-## Contacto
+#### 📌 Ejemplo de Entrada
 
-Para cualquier consulta, contacta a: [juan.munoz@affi.net](juan.munoz@affi.net)
+```json
+{
+  "massiveProcessingId": "0121c7d9-f0c3-4db8-9f24-ae1e5afbae6a-20250423085935"
+}
+```
+
+#### 📌 Ejemplo de Respuesta
+
+```json
+{
+  "ProcessEstatus": "UNSIGNED",
+  "ProcessId": "a8bf0f87"
+}
+```
+
+#### 🧾 Descripción de Campos
+
+| Nombre         | Tipo   | Descripción                                                                                                                                                             |
+| -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ProcessEstatus | String | Estado actual del proceso:`<br>`• `UNSIGNED`: No ha sido firmado`<br>`• `WAITING_FOR_SIGNATURES`: En espera de firmas`<br>`• `SIGNED`: Proceso finalizado |
+| ProcessId      | String | ID del proceso en Autentic                                                                                                                                               |
+
+---
+
+### 3. 📂 Consultar Archivos del Proceso
+
+**Endpoint:** `POST /api/archivos/consultarArchivo`
+
+#### 📌 Ejemplo de Entrada
+
+```json
+{
+  "processId": "a8bf0f87"
+}
+```
+
+#### 📌 Ejemplo de Respuesta
+
+```json
+{
+  "files": [
+    {
+      "name": "REGLAMENTO_DE_FIANZA_AFFI_8.pdf",
+      "buffer": {
+        "type": "Buffer",
+        "data": []
+      }
+    },
+    {
+      "name": "CONTRATO_DE_FIANZA_COLECTIVA_CON000493.pdf",
+      "buffer": {
+        "type": "Buffer",
+        "data": []
+      }
+    }
+  ]
+}
+```
+
+> Los archivos retornados son objetos `Buffer`, puedes usarlos para cargarlos en HubSpot o permitir su descarga.
+
+---
+
+## 🧩 Flujo de Uso Recomendado
+
+1. Llamar a `POST /api/procesos/asignarProceso` con los datos del contrato.
+2. Guardar el `massiveProcessingId` recibido.
+3. Consultar el estado del proceso con `POST /api/procesos/consultarEstadoProceso`.
+4. Obtener los archivos relacionados usando `POST /api/archivos/consultarArchivo`.
