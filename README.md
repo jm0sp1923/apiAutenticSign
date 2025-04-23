@@ -23,7 +23,6 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
   "nombre_persona_natural": "Edgar David Camacho Garcia",
   "ciudad_inmobiliaria": "Bogota",
   "cedula": "1109184892",
-  "fecha": "Diecinueve (19) de agosto de 2024",
   "nombre_representante_legal": "Juan Sebastian Munoz Perez",
   "cedula_representante_legal": "1109184896",
   "nombre_establecimiento_comercio": "AFFI SAS PRUEBA",
@@ -66,8 +65,7 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 | cedula_representante_legal | String | Cédula del representante legal                                                                |
 | ciudad_expedicion          | String | Ciudad de expedición de la cédula (solo aplica para tipo "Jurídica")                        |
 | numero_celular             | String | Número de celular (**+57 opcional**; el sistema lo limpia automáticamente)             |
-| correo                     | String | Correo al cual llegará el enlace del proceso para firma                                       |
-| fecha                      | String | Fecha del contrato (solo aplica para tipo "Natural")                                           |
+| correo                     | String | Correo al cual llegará el enlace del proceso para firm                                        |
 
 ---
 
@@ -104,10 +102,10 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 
 #### 🧾 Descripción de Campos
 
-| Nombre         | Tipo   | Descripción                                                                                                                                                             |
-| -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| ProcessEstatus | String | Estado actual del proceso:`<br>`• `UNSIGNED`: No ha sido firmado`<br>`• `WAITING_FOR_SIGNATURES`: En espera de firmas`<br>`• `SIGNED`: Proceso finalizado |
-| ProcessId      | String | ID del proceso en Autentic                                                                                                                                               |
+| Nombre         | Tipo   | Descripción                                                                                                                |
+| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------- |
+| ProcessEstatus | String | Estado actual del proceso:<br />`UNSIGNED`: No ha sido firmado : En espera de firmas <br />`SIGNED`: Proceso finalizado |
+| ProcessId      | String | ID del proceso en Autentic                                                                                                  |
 
 ---
 
