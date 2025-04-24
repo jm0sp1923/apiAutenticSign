@@ -311,8 +311,6 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 }
 ```
 
-> Los archivos retornados son objetos `Buffer`, puedes usarlos para cargarlos en HubSpot o permitir su descarga.
-
 ## 🧩 Flujo de Uso Recomendado
 
 1. Llamar a `POST /api/procesos/asignarProceso` con los datos del contrato.
