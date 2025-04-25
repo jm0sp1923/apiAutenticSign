@@ -335,3 +335,76 @@ Con este endpoint puede mandar recordatorios a los firmantes pendientes del proc
   "processId": "c2a67f47"
 }
 ```
+
+## 6. Obtener los datos del correo de firmas
+
+**Endpoint:** `POST /api/hubspot/obtenerDatosEmail`
+
+Este endpoint permite obtener los datos del último firmante de un proceso a través del contenido HTML del correo. La idea es procesar el correo para extraer el nombre del firmante y el ID del proceso de firma.
+
+### 📌 Ejemplo de Entrada (HTML)
+
+```html
+
+Proceso de firma completado - Autentic Sign<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
+  </head>
+  <body width="100%" style="margin:0; padding:0!important; background-color:#222222">
+    <center style="width:100%; background-color:#F6FAFC">
+      <div style="max-width:600px; padding:25px 5px 25px 5px">
+        <div style="border:4px solid #F0F4F6; border-radius:12px">
+          <table style="border-collapse:collapse; border-radius:8px; overflow:hidden">
+            <tbody>
+              <tr>
+                <td style="background:#1C5B93; color:#FFFFFF; width:600px; font-size:16px; padding:8px 24px; font-family:'Verdana'; font-style:normal; font-weight:700; line-height:26px">
+                  Documentos firmados
+                </td>
+              </tr>
+              <tr>
+                <td style="background:#FFFFFF; color:#5B6772; padding:8px 24px 8px 24px; font-family:'Verdana'; font-style:normal; font-size:14px; line-height:26px">
+                  <div style="margin:0">
+                    <p style="margin-bottom:0">
+                      <b style="color:#00A18D">¡</b>Hola <b style="text-transform:capitalize">Juan Sebastian Muñoz Perez</b><b style="color:#00A18D">!</b>
+                    </p>
+                    <p style="margin-bottom:0">El proceso de firma fue completado, haz clic en el botón "Ver documentos".</p>
+                    <div style="text-align:center; padding:30px 0px 20px 0px">
+                      <a class="button-a button-a-primary" href="https://qafront.autenticsign.com/#/corporate/pb/view-documents-signed/b37356b4/AUTENTICSIGN" style="flex-direction:row; align-items:flex-start; padding:8px 24px; line-height:15px; text-decoration:none; padding:13px 17px; color:#ffffff; background:#00A18D; border-radius:20px">
+                        Ver documentos
+                      </a>
+                    </div>
+                  </div>
+                  <div style="color:#1C5B93; text-align:center; padding:15px; font-family:'Verdana'; font-style:normal; font-weight:400; font-size:12px; line-height:26px">
+                    Fácil, rápida y segura... ¡Así es la firma electrónica!
+                  </div>
+                  <div style="text-align:right">
+                    <img src="https://autentic-sign-multimedia.s3.us-west-2.amazonaws.com/themes/AUTENTIC/LogotipoAutenTIC_Color.png" width="200" alt="alt_text" border="0" style="width:130px; height:auto; font-family:sans-serif; font-size:15px; line-height:15px; color:#555555">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding:12px 2px; text-align:justify; font-family:'Verdana'; font-style:normal; font-weight:400; font-size:10px; line-height:12px; color:#5B6772">
+          <p>El presente correo electrónico puede contener información confidencial o legalmente protegida...</p>
+          <p>Los datos personales que por medio de este correo se soliciten serán tratados...</p>
+        </div>
+      </div>
+    </center>
+  </body>
+</html>
+Proceso de firma completado - Autentic Sign
+```
+
+#### 🧾 Explicacion del funcionamiento
+
+* **Asunto del correo:** El correo tiene un asunto relacionado con "Documentos firmados" o "Notificación de firma en Autentic Sign".
+* **Cuerpo del correo:** El contenido contiene detalles del firmante, un enlace para ver los documentos firmados, y el nombre del firmante, en este caso "Juan Sebastian Muñoz Perez".
+* **Datos importantes a extraer:**
+  * El nombre del firmante: `<b style="text-transform:capitalize">Juan Sebastian Muñoz Perez</b>`
+  * El ID del proceso de firma: Se encuentra en el enlace, como `view-documents-signed/b37356b4/AUTENTICSIGN`.
+
+El endpoint es capaz de extraer estos datos del cuerpo HTML del correo y procesarlos para usarlos en la aplicación. Este los guardara en la colection de datos de Mongo con su processId, la fecha y el firmante
