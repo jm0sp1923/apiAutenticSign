@@ -6,38 +6,45 @@ import Procesos from "../models/processModel.js";
 import Gerencias from "../models/gerenciasModel.js";
 
 async function rememberMail(data) {
-  
   try {
-    
-    const { numContrato, nombreCliente, processId } = data;
-    const token = await getToken();
-    const proceso = await Procesos.findOne({ processId: processId });
 
+    // Validar que los datos necesarios estén presentes para la creación del correo
+    const { numContrato, nombreCliente, processId } = data;
+
+    // Obtener token para enviar correo
+    const token = await getToken();
+
+    // Buscar el proceso por ID
+    const proceso = await Procesos.findOne({ processId });
     if (!proceso) {
-      throw new Error("Proceso no encontrado");
+      throw new Error("Proceso no encontrado.");
     }
 
     let emailDestino = "";
     let nameDestinatario = "";
+
+    // Determinar destinatario del recordatorio
     if (proceso.firmante === "Lilian Paola Holguín Orrego") {
-      // Si el firmante es Lilian, buscamos a Cesar
-      const gerencia = await Gerencias.findOne({
-        name: "Cesar Augusto Tezna Castaño",
-      });
-      emailDestino = gerencia?.email;
+      const gerencia = await Gerencias.findOne({ name: "Cesar Augusto Tezna Castaño" });
+      if (!gerencia || !gerencia.email) {
+        throw new Error("No se encontró el email del destinatario (Cesar).");
+      }
+      emailDestino = gerencia.email;
       nameDestinatario = "Cesar Augusto Tezna Castaño";
     } else {
-      // En cualquier otro caso, buscamos a Lilian
-      const gerencia = await Gerencias.findOne({
-        name: "Lilian Paola Holguín Orrego",
-      });
-      emailDestino = gerencia?.email;
+      const gerencia = await Gerencias.findOne({ name: "Lilian Paola Holguín Orrego" });
+      if (!gerencia || !gerencia.email) {
+        throw new Error("No se encontró el email del destinatario (Lilian).");
+      }
+      emailDestino = gerencia.email;
       nameDestinatario = "Lilian Paola Holguín Orrego";
     }
 
-    const sender = "juan.munoz@affi.net";
-    const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;
+    // Construcción del cuerpo del correo
+    const sender = "juan.munoz@affi.net";//Correo del remitente
+    const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;// URL para enviar el correo
 
+    //Contrucción del contenido HTML del correo
     const htmlContent = emailRemember(
       nameDestinatario,
       numContrato,
@@ -64,6 +71,7 @@ async function rememberMail(data) {
       saveToSentItems: false,
     };
 
+    // Enviar correo usando Graph API De Microsoft
     const res = await axios.post(urlMailSend, jsonBody, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -71,19 +79,19 @@ async function rememberMail(data) {
       },
     });
 
-    console.log("Mensaje enviado correctamente", res.data);
+    console.log("📨 Mensaje enviado correctamente:", res.data);
   } catch (error) {
-    console.error("Error al enviar el correo:");
+    console.error("❌ Error al enviar el correo:");
+
     if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
+      console.error("Código de estado:", error.response.status);
+      console.error("Respuesta del servidor:", error.response.data);
     } else {
-      console.log(error.message);
+      console.error("Mensaje:", error.message);
     }
 
     throw error;
   }
 }
-
 
 export default rememberMail;

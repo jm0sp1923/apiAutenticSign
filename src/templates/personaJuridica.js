@@ -36,7 +36,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha) => (
               lastName: "",
               identification: datos.cedula_representante_legal,
               email: datos.correo,
-              phone: datos.numero_celular,
+              phone: datos.numero_celular || "",
               roleTemplate: "cliente",
               authMethods: ["OTP"],
             },

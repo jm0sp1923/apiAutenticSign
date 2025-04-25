@@ -1,33 +1,35 @@
-import getValidToken from "../config/tokenManagerAutentic.js";
-import obtenerFormatoFecha from "../utils/obtenerFormatoFecha.js";
-import tarifaSegunZona from "../utils/tarifaSegunZona.js";
-import personaJuridicaTemplate from "../templates/personaJuridica.js";
-import personaNaturalTemplate from "../templates/personaNatural.js";
-import axios from "axios";
-import "dotenv/config";
+// Importamos funciones auxiliares y librerías necesarias
+import getValidToken from "../config/tokenManagerAutentic.js"; // Función para obtener token válido de autenticación
+import obtenerFormatoFecha from "../utils/obtenerFormatoFecha.js"; // Utilidad para formatear fecha
+import tarifaSegunZona from "../utils/tarifaSegunZona.js"; // Lógica para calcular tarifa según ciudad
+import personaJuridicaTemplate from "../templates/personaJuridica.js"; // Template para persona jurídica
+import personaNaturalTemplate from "../templates/personaNatural.js"; // Template para persona natural
+import axios from "axios"; // Cliente HTTP
+import "dotenv/config"; // Permite usar variables de entorno
 
-
+// 👉 Servicio para asignar un proceso de firma electrónica en la plataforma Autentic
 async function asignarProcesoService(tipo_persona, datos) {
-  
-  //Obtener Token de Autenticación Para el API de Autentic
+  // Obtenemos el token de autenticación requerido por Autentic
   const token = await getValidToken();
-  
+
   try {
+    // Validación del token obtenido
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
     }
 
-    //Funcion para obtener la fecha en el formato requerido para la generarcion del contrato
+    // Obtenemos la fecha actual en formato compatible con Autentic
     const fecha = obtenerFormatoFecha();
-    
-    //Funcion para obtener la tarifa dependiendo de la ciudad requerido para la generarcion del contrato
+
+    // Calculamos la tarifa basada en la ciudad proporcionada
     const tarifa_segun_zona = tarifaSegunZona(datos.ciudad_inmobiliaria) + "%";
 
+    // Obtenemos el endpoint desde las variables de entorno
     const END_POINT_CARGAR_PROCESO_API_AUTENTIC = process.env.END_POINT_API_AUTNETIC_SIGN;
 
     let jsonBody;
 
-    //Seleccionar el template dependiendo del tipo de persona
+    // Seleccionamos el cuerpo del request dependiendo si la persona es Natural o Jurídica
     switch (tipo_persona) {
       case "Jurídica":
         jsonBody = personaJuridicaTemplate(datos, tarifa_segun_zona, fecha);
@@ -36,35 +38,36 @@ async function asignarProcesoService(tipo_persona, datos) {
         jsonBody = personaNaturalTemplate(datos, tarifa_segun_zona, fecha);
         break;
       default:
-        throw new Error("Tipo de proceso no válido.");
+        throw new Error("Tipo de proceso no válido."); // Validación en caso de tipo no soportado
     }
 
-    //console.log("jsonBody", JSON.stringify(jsonBody, null, 2));
-    
+    // Realizamos la solicitud POST para iniciar el proceso de firma
     const processResponse = await axios.post(
       END_POINT_CARGAR_PROCESO_API_AUTENTIC,
       jsonBody,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }, // Se incluye el token en el header
       }
     );
-  
+
+    // Retornamos el massive ID del proceso iniciado
     return processResponse.data.body.massiveProcessingId;
+
   } catch (error) {
-    if(error.status === 401){
+    // Validación específica si el token está vencido o es inválido
+    if (error.status === 401) {
       throw new Error("Token mal formado o expirado.");
     }
-    console.error("Error en asignarProceso:", error.message);
-    throw error;
+    console.error("Error en asignarProceso:", error.message); // Log del error
+    throw error; // Relanzamos el error para que pueda manejarse arriba
   }
 }
 
 
-//Funcion para consultar el estado del proceso
+// 👉 Servicio para consultar el estado de un proceso previamente creado
 async function consultarEstadoProcesoService(massiveProcessingId) {
-  
-  //Obtener Token de Autenticación Para el API de Autentic
-  const token = await getValidToken();
+  const token = await getValidToken(); // Nuevamente obtenemos un token válido
+
   try {
     if (!token || typeof token !== "string") {
       throw new Error("No se pudo obtener un token válido.");
@@ -72,6 +75,7 @@ async function consultarEstadoProcesoService(massiveProcessingId) {
 
     const END_POINT_CONSULTAR_PROCESO_API = process.env.END_POINT_API_AUTNETIC_SIGN;
 
+    // Hacemos una solicitud GET al endpoint concatenando el ID del proceso
     const processResponse = await axios.get(
       `${END_POINT_CONSULTAR_PROCESO_API}${massiveProcessingId}`,
       {
@@ -81,20 +85,18 @@ async function consultarEstadoProcesoService(massiveProcessingId) {
       }
     );
 
-    //console.log("processResponse", JSON.stringify(processResponse.data, null, 2));
-
-
+    // Accedemos al estado del proceso y su ID desde la respuesta
     const processEstatus = processResponse.data.body?.processes?.[0]?.status;
     const processId = processResponse.data.body.processes?.[0].processId;
 
-//retorna el estado del proceso [ UNSIGNED ||SIGNED || WAITING_FOR_SIGNATURES ] y el id del proceso
-  
+    // Retornamos el estado y el ID del proceso
     return { processEstatus, processId };
+
   } catch (error) {
-    console.error("Error al consultar el proceso:", error.message);
-    throw error;
+    console.error("Error al consultar el proceso:", error.message); // Log del error
+    throw error; // Se relanza para que lo maneje quien llame esta función
   }
 }
 
-
-export {asignarProcesoService,consultarEstadoProcesoService};
+// Exportamos ambas funciones para ser utilizadas desde otros módulos
+export { asignarProcesoService, consultarEstadoProcesoService };
