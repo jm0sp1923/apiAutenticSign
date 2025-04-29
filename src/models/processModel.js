@@ -18,7 +18,14 @@ const processSchema = new mongoose.Schema({
   fecha: {
     type: String,
     default: Date.now   // Por defecto se establece la fecha y hora actual
+  },
+  // Campo para el asunto del correo, debe ser un String, recorta los espacios y es obligatorio
+  asunto:{
+    type: String,
+    trim: true,          // Elimina espacios al inicio y al final
+
   }
+
 });
 
 // Exportamos el modelo llamado "procesos", que usará este esquema

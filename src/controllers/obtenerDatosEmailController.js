@@ -15,7 +15,8 @@ async function obtenerDatosEmailController(req, res) {
       { processId: processEmail.processId }, // Filtro de búsqueda por 'processId'
       {
         firmante: processEmail.firmante,  // Actualizamos el 'firmante' del proceso
-        fecha: processEmail.fecha          // Actualizamos la 'fecha' del proceso
+        fecha: processEmail.fecha,        // Actualizamos la 'fecha' del proceso
+        asunto: processEmail.asunto // Actualizamos el 'asunto' del proceso
       },
       { upsert: true, new: true } // 'upsert' crea un nuevo documento si no se encuentra el proceso
     );

@@ -1,4 +1,4 @@
-const emailRemember = (nombre_destinatario,num_contrato, nombre_cliente, fecha_envio_correo, process_id) => `
+const emailRemember = (nombre_destinatario,num_contrato, nombre_cliente, fecha_envio_correo, process_id,asunto) => `
   <body>
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f2f4f7; padding:40px 20px;">
       <tr>
@@ -14,17 +14,14 @@ const emailRemember = (nombre_destinatario,num_contrato, nombre_cliente, fecha_e
                 <div style="background-color:#f9fafb; border-left:4px solid #2b2d77; padding:15px 20px; margin-top:20px; border-radius:6px; font-size:15px;">
                   <p><strong>📄 Número de contrato:</strong> ${num_contrato}</p>
                   <p><strong>🏣 Nombre cliente:</strong> ${nombre_cliente}</p>
+                  <p><strong>🪧 Asunto del correo:</strong> ${asunto}</p>
                   <p><strong>📅 Fecha de envío:</strong> ${fecha_envio_correo}</p>
-                  <p><strong>🔁 Process ID:</strong> ${process_id}</p>
+                  <p><strong>🪪 Process Id:</strong> ${process_id}</p>
                 </div>
 
                 <p style="font-size:16px; line-height:1.6; margin-top:20px;">
-                Por favor revisa tu bandeja de entrada en la fecha de envío para ver el correo con el enlace para firmar.
+                <strong>Nota</strong>: Por favor revisa tu bandeja de entrada en la fecha de envío para ver el correo con el enlace para firmar.
                 </p>
-                <pstyle="font-size:12px; line-height:1.6; margin-top:20px;">
-                  <strong>Nota</strong>: Puedes buscar el correo con el enlace de firma que contiene el ID de proceso <strong>${process_id}</strong>. Si ya completaste la firma, puedes ignorar este mensaje.
-                </p>
-
                 <p style="margin-top:30px; font-size:13px; color:#888; text-align:center;">
                   Gracias por tu atención.
                 </p>

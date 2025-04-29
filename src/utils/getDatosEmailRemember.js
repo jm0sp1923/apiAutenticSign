@@ -26,6 +26,7 @@ export default function getDatosEmailRemember(bodyText) {
       // Obtener la fecha actual en formato 'es-CO' (colombiano)
       const fecha = new Date().toLocaleDateString('es-CO').toString();
 
+      
       // Si falta el nombre del firmante o el ID del proceso, lanzar un error
       if (!firmante || !processId) {
         throw new Error("Datos incompletos: firmante o ID de proceso no encontrado");
@@ -35,7 +36,8 @@ export default function getDatosEmailRemember(bodyText) {
       return {
         processId,
         firmante,
-        fecha
+        fecha,
+        asunto
       };
     } else {
       // Si el asunto es "Proceso de firma completado - Autentic Sign"
@@ -50,7 +52,8 @@ export default function getDatosEmailRemember(bodyText) {
       return {
         processId,
         "firmante": "Cesar Augusto Tezna Castaño",  // Firmante predeterminado
-        fecha
+        fecha,
+        asunto
       };
     }
 

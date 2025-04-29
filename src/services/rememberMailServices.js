@@ -16,7 +16,8 @@ async function rememberMail(data) {
 
     // Buscar el proceso por ID
     const proceso = await Procesos.findOne({ processId });
-    if (!proceso) {
+
+      if (!proceso) {
       throw new Error("Proceso no encontrado.");
     }
 
@@ -50,7 +51,8 @@ async function rememberMail(data) {
       numContrato,
       nombreCliente,
       proceso.fecha,
-      processId
+      processId,
+      proceso.asunto,
     );
 
     const jsonBody = {
