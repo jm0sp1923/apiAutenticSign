@@ -23,8 +23,11 @@ const processSchema = new mongoose.Schema({
   asunto:{
     type: String,
     trim: true,          // Elimina espacios al inicio y al final
-
-  }
+  },
+  modificado:{
+    type: String,
+    default: new Date().toLocaleDateString('es-CO').toString()   // Por defecto se establece la fecha y hora actual
+  },
 
 });
 

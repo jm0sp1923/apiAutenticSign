@@ -4,6 +4,7 @@ import obtenerFormatoFecha from "../utils/obtenerFormatoFecha.js"; // Utilidad p
 import tarifaSegunZona from "../utils/tarifaSegunZona.js"; // Lógica para calcular tarifa según ciudad
 import personaJuridicaTemplate from "../templates/personaJuridica.js"; // Template para persona jurídica
 import personaNaturalTemplate from "../templates/personaNatural.js"; // Template para persona natural
+import getFirmantesInternos  from "../utils/getFirmantesInternos.js"; // Función para obtener firmantes internos
 import axios from "axios"; // Cliente HTTP
 import "dotenv/config"; // Permite usar variables de entorno
 
@@ -29,13 +30,16 @@ async function asignarProcesoService(tipo_persona, datos) {
 
     let jsonBody;
 
+    
+    let firmantes = await getFirmantesInternos(); // Obtenemos los firmantes internos //Gerencia comercial y Gerencia General
+    
     // Seleccionamos el cuerpo del request dependiendo si la persona es Natural o Jurídica
     switch (tipo_persona) {
       case "Jurídica":
-        jsonBody = personaJuridicaTemplate(datos, tarifa_segun_zona, fecha);
+        jsonBody = personaJuridicaTemplate(datos, tarifa_segun_zona, fecha,firmantes);
         break;
       case "Natural":
-        jsonBody = personaNaturalTemplate(datos, tarifa_segun_zona, fecha);
+        jsonBody = personaNaturalTemplate(datos, tarifa_segun_zona, fecha,firmantes);
         break;
       default:
         throw new Error("Tipo de proceso no válido."); // Validación en caso de tipo no soportado
