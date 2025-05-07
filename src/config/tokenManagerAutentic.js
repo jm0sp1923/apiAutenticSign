@@ -4,7 +4,7 @@ import getTokenApi from "../utils/auth/getTokenAutentic.js";
 
 // Ruta del archivo para guardar el token
 // En desarrollo puedes usar una ruta fija en tu proyecto para pruebas 
-// const tokenFilePath = path.resolve("src/constants/tokenAutentic.json");
+//const tokenFilePath = path.resolve("src/constants/tokenAutentic.json");
 // En producción, Azure no permite modificar archivos en el sistema de archivos local por lo que se utiliza la ruta temporal
 const tokenFilePath = "/tmp/tokenAutentic.json";
 

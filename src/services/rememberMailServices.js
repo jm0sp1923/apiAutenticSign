@@ -9,7 +9,7 @@ async function rememberMail(data) {
   try {
 
     // Validar que los datos necesarios estén presentes para la creación del correo
-    const { numContrato, nombreCliente, processId } = data;
+    const { numContrato, nombreCliente, processId, tipo_contrato } = data;
 
     // Obtener token para enviar correo
     const token = await getToken();
@@ -23,6 +23,7 @@ async function rememberMail(data) {
 
     let emailDestino = "";
     let nameDestinatario = "";
+    let asunto = "";
 
     // Determinar destinatario del recordatorio
     if (proceso.firmante === "Lilian Paola Holguín Orrego") {
@@ -41,8 +42,15 @@ async function rememberMail(data) {
       nameDestinatario = "Lilian Paola Holguín Orrego";
     }
 
+    if(tipo_contrato === "Jurídica"){
+      asunto = "Contrato de Fianza Juridica - AutenTIC Sign";
+    }else if(tipo_contrato === "Natural"){
+      asunto = "Contrato De Fianza Natural - AutenTIC Sign";
+    }
+
+
     // Construcción del cuerpo del correo
-    const sender = "juan.munoz@affi.net";//Correo del remitente
+    const sender = "comercial@affi.net";//Correo del remitente
     const urlMailSend = `https://graph.microsoft.com/v1.0/users/${sender}/sendMail`;// URL para enviar el correo
 
     //Contrucción del contenido HTML del correo
@@ -52,7 +60,7 @@ async function rememberMail(data) {
       nombreCliente,
       proceso.fecha,
       processId,
-      proceso.asunto,
+      asunto,
     );
 
     const jsonBody = {
