@@ -29,9 +29,6 @@ async function rememberMail(data, destinatarioTipo) {
   }
 }
 
-
-
-
 async function enviarCorreoGerencia(data) {
   // Validar que los datos necesarios estén presentes para la creación del correo
   const { numContrato, nombreCliente, processId, tipo_contrato } = data;
@@ -134,7 +131,6 @@ nameDestinatario = `${director.name} ${director.last_name}`;
     numContrato,
     nombreCliente,
     proceso.modificado,
-    processId,
     proceso.firmante
   );
 

@@ -8,7 +8,7 @@ const emailRemember = (nombre_destinatario,num_contrato, nombre_cliente, fecha_e
               <td>
                 <h2 style="color:#1a202c; margin-bottom:20px;">¡Hola <strong>${nombre_destinatario}</strong>!</h2>
                 <p style="font-size:16px; line-height:1.6;">
-                  Te informamos que el contrato de fianza ha sido firmado por la gerencia comercial, puedes continuar con tu proceso comercial.
+                  Te informamos que el contrato de fianza ha sido firmado por la gerencia comercial, puedes continuar con tu gestion comercial.
                 </p>
 
                 <div style="background-color:#f9fafb; border-left:4px solid #2b2d77; padding:15px 20px; margin-top:20px; border-radius:6px; font-size:15px;">
