@@ -37,8 +37,8 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => (
           authMethods: ["OTP"],
         },
         {
-          name: firmantes.comercial.name.split(" ")[0],
-          lastName: firmantes.comercial.name.split(" ").slice(1).join(" "),
+          name: firmantes.comercial.name,
+          lastName: firmantes.comercial.last_name,
           identification: firmantes.comercial.cc.toString(),
           email: firmantes.comercial.email,
           phone: "",
@@ -46,8 +46,8 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => (
           authMethods: ["OTP"],
         },
         {
-          name: firmantes.gerencia.name.split(" ")[0],
-          lastName: firmantes.gerencia.name.split(" ").slice(1).join(" "),
+          name: firmantes.gerencia.name,
+          lastName: firmantes.gerencia.last_name,
           identification: firmantes.gerencia.cc.toString(),
           email: firmantes.gerencia.email,
           phone: "",

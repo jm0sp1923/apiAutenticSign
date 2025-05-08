@@ -17,7 +17,7 @@ const router = express.Router();
 router.post("/procesarArchivo", validarProcessID, procesarArchivoController);
 
 // Ruta para enviar un recordatorio por correo electrónico
-router.post("/emailRemender", validarProcessID,rememberMail);
+router.post("/emailReminder", validarProcessID,rememberMail);
 
 // Ruta para obtener datos de un correo electrónico, con un cuerpo de solicitud que permite texto plano
 router.post("/obtenerDatosEmail", express.text({ type: '*/*' }), obtenerDatosEmail);

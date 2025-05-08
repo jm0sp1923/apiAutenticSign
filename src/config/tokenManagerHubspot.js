@@ -5,10 +5,10 @@ import refreshAccessToken from "../utils/auth/getTokenHubspot.js";
 
 // Ruta del archivo para guardar el token En desarrollo puedes usar una ruta fija en tu proyecto para pruebas 
 
-//const tokenFilePath = path.resolve("src/constants/tokenHubspot.json");
+const tokenFilePath = path.resolve("src/constants/tokenHubspot.json");
 
 // En producción, Azure no permite modificar archivos en el sistema de archivos local por lo que se utiliza la ruta temporal
-const tokenFilePath = "/tmp/tokenHubspot.json";
+//const tokenFilePath = "/tmp/tokenHubspot.json";
 let tokenCache = null; 
 
 async function getValidHubspotToken() {

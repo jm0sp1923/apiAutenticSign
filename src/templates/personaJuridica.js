@@ -1,4 +1,7 @@
-const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => ({
+const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => (
+  console.log(firmantes),
+  {
+
   sendCompletionNotification: true,
   emailForNotification: "juan.munoz@affi.net",
   processesTemplate: [
@@ -41,7 +44,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => 
         },
         {
           name: firmantes.comercial.name, // "Lilian Paola"
-          lastName: firmantes.comercial.name, // "Holguín Orrego"
+          lastName: firmantes.comercial.last_name, // "Holguín Orrego"
           identification: firmantes.comercial.cc.toString(),
           email: firmantes.comercial.email,
           phone: "",
@@ -50,7 +53,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => 
         },
         {
           name: firmantes.gerencia.name, // "Cesar Augusto"
-          lastName: firmantes.gerencia.name, // "Tezna Castaño"
+          lastName: firmantes.gerencia.last_name, // "Tezna Castaño"
           identification: firmantes.gerencia.cc.toString(),
           email: firmantes.gerencia.email,
           phone: "",
