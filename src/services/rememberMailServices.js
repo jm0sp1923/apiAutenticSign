@@ -67,9 +67,9 @@ async function enviarCorreoGerencia(data) {
   }
 
   if (tipo_contrato === "Jurídica") {
-    asunto = "Contrato de Fianza Jurídica - AutenTIC Sign";
+    asunto = "Contrato De Fianza Colectiva - AutenTIC Sign";
   } else if (tipo_contrato === "Natural") {
-    asunto = "Contrato De Fianza Natural - AutenTIC Sign";
+    asunto = "Contrato De Fianza Colectiva - AutenTIC Sign";
   }
 
 

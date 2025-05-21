@@ -1,6 +1,6 @@
 const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => ({
   sendCompletionNotification: true,
-  emailForNotification: "juan.munoz@affi.net",
+  emailForNotification: "juan.rodriguez@affi.net",
   processesTemplate: [
     {
       enterpriseId: "9000533702",
