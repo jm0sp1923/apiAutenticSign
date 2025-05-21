@@ -118,7 +118,7 @@ async function crearArchivoService(nombre_inm, num_contrato, { name, buffer }) {
   const nombreInmuebleLimpio = nombre_inm.replace(/\s+/g, "_");
 
   // Reemplaza el número de contrato y genera el nuevo nombre del archivo
-  const nuevoNombre = nombreLimpio.replace(/CON\d+$/, `CON${num_contrato}`) + `_${nombreInmuebleLimpio}.pdf`;
+  const nuevoNombre = `${nombreLimpio}_${num_contrato}_${nombreInmuebleLimpio}.pdf`;
 
   console.log("Nombre contrato autentic: ", nuevoNombre);
 
