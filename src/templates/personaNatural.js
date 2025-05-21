@@ -4,8 +4,8 @@ const personaNaturalTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => (
   processesTemplate: [
     {
       enterpriseId: "9000533702",
-      senderEmail: "juan.munoz@affi.net",
-      senderIdentification: "1109184891",
+      senderEmail: "juan.rodriguez@affi.net",
+      senderIdentification: "1144203293",
       idTemplate: "056321ad",
       filenames: [
         "MODELO_CONTRATO_FIANZA_COLECTIVA.pdf",
