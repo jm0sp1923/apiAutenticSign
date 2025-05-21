@@ -10,7 +10,7 @@ const personaJuridicaTemplate = (datos, tarifa_segun_zona, fecha, firmantes) => 
       senderIdentification: "1144203293",
       idTemplate: "1cdb9a6a",
       filenames: [
-        "MODELO_CONTRATO_FIANZA_COLECTIVA.pdf",
+        "CONTRATO_FIANZA_COLECTIVA.pdf",
         "REGLAMENTO_DE_FIANZA_AFFI_8.pdf",
       ],
       ensambled: {
