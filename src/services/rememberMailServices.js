@@ -67,9 +67,9 @@ async function enviarCorreoGerencia(data) {
   }
 
   if (tipo_contrato === "Jurídica") {
-    asunto = "Contrato de Fianza Juridica - AutenTIC Sign";
+    asunto = "Contrato De Fianza Colectiva - AutenTIC Sign";
   } else if (tipo_contrato === "Natural") {
-    asunto = "Contrato De Fianza Natural - AutenTIC Sign";
+    asunto = "Contrato De Fianza Colectiva - AutenTIC Sign";
   }
 
 
@@ -112,11 +112,12 @@ async function enviarCorreoDirector(data) {
   let nameDestinatario = "";
 
 
-  // Determinar destinatario del recordatorio
-  const zonasValidas = ["Antioquia", "Bogotá", "Regiones"];
-if (!zonasValidas.includes(zona)) {
-  throw new Error("Zona no válida.");
-}
+   // Validar la zona y determinar director
+  let zonaBusqueda = zona;
+
+  if (zona !== "Antioquia" && zona !== "Bogotá") {
+    zonaBusqueda = "Regiones"; // Internamente tratamos el resto como "Regiones"
+  }
 
 const director = await Directores.findOne({ zona });
 if (!director || !director.email) {

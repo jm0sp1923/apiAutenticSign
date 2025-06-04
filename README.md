@@ -322,17 +322,30 @@ Permite cargar un proceso para personas **Naturales** o **Jurídicas** en Autent
 
 #### 5. Enviar recordatorios
 
-**Endpoint:** `POST /api/hubspot/emailRemender`
+**Endpoints:** `POST /api/hubspot/emailReminder?tipoDestinatario=gerente` `POST /api/hubspot/emailReminder?tipoDestinatario=director` 
 
-Con este endpoint puede mandar recordatorios a los firmantes pendientes del proceso, en este caso a la gerencia comercial y gerencia general.
+Con este endpoint puede mandar recordatorios a los firmantes pendientes del proceso, en este caso a la gerencia comercial y gerencia general. Adicionalmente se pueden enviar recordatorios a los directores comerciales dependiendo de la zona de la vinculacion
 
-#### 📌 Ejemplo de Entrada
+
+#### 📌 Ejemplo de Entrada - Director
 
 ```json
 {
   "numContrato": "CON12903091", 
   "nombreCliente": "SPA GRUPO INMOBILIARIO", 
-  "processId": "c2a67f47"
+  "processId": "52b1a40f",
+  "zona":"Antioquia"
+}
+```
+
+#### 📌 Ejemplo de Entrada - Gerente
+
+```json
+{
+  "numContrato": "CON12903091", 
+  "nombreCliente": "SPA GRUPO INMOBILIARIO", 
+  "tipo_contrato": "Natural",
+  "processId": "4591280e"
 }
 ```
 
