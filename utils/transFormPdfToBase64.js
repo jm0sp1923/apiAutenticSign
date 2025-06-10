@@ -15,8 +15,12 @@ async function convertToPdf(inputPath, outputPdf) {
 
     try {
         // Convertir a PDF usando LibreOffice
-        
-        await execPromise(`soffice --headless --convert-to pdf "${inputPath}" --outdir "${outputPdf}"`);
+
+        const sofficePath = `"C:\\Program Files\\LibreOffice\\program\\soffice.exe"`;  // Ruta completa al ejecutable
+        const command = `${sofficePath} --headless --convert-to pdf "${inputPath}" --outdir "${outputPdf}"`;
+
+        await execPromise(command);
+
         console.log("✅ Documento convertido a PDF");
 
 
@@ -29,7 +33,7 @@ async function convertToPdf(inputPath, outputPdf) {
         const base64Pdf = pdfBuffer.toString("base64");
 
         // Crear un archivo .txt con el contenido base64
-        const outputBase64File = join(__dirname,"..", "public", "contrato_generado_base64.txt");
+        const outputBase64File = join(__dirname, "..", "public", "contrato_generado_base64.txt");
         writeFileSync(outputBase64File, base64Pdf);
         console.log("✅ Archivo .txt con PDF en base64 generado:", outputBase64File);
 

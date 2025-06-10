@@ -1,0 +1,5 @@
+.env
+.env.credencialesAutentic
+node_modules
+package-lock.json
+public/contrato_generado_base64.txt

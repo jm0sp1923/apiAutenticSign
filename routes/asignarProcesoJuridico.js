@@ -1,5 +1,5 @@
 import express from "express";
-import asignarProceso from "../utils/asignarProcessNatural.js";
+import asignarProceso from "../utils/asignarProcessJuridico.js";
 
 const router = express.Router();
 

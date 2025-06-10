@@ -20,15 +20,17 @@ const inputFile = join(
 const outputFile = join(__dirname, "..", "public", "contrato_generado.docx");
 
 async function asignarProceso(
-  numero_de_contrato,
-  nombre_inmobiliaria,
-  ciudad_inmobiliaria,
-  nit_inmobiliaria,
-  nombre_representante_legal,
-  cedula_representante_legal,
-  ciudad_expedicion,
-  tarifa_segun_zona,
-  fecha
+ numero_de_contrato,
+      nombre_inmobiliaria,
+      ciudad_inmobiliaria,
+      nit_inmobiliaria,
+      nombre_representante_legal,
+      cedula_representante_legal,
+      ciudad_expedicion,
+      tarifa_segun_zona,
+      numero_celular,
+      correo,
+      fecha
 ) {
   const datosContrato = {
     NUMERO_CONTRATO: numero_de_contrato,
